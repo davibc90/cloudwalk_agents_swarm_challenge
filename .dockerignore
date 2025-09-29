@@ -1,0 +1,25 @@
+# Virtual environments
+venv
+.env
+
+# Git
+.git
+.gitignore
+
+# VSCode
+.vscode
+*.code-workspace
+
+# Development
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Build
+build/
+dist/
+*.egg-info/

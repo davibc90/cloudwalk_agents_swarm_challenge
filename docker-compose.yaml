@@ -1,0 +1,72 @@
+services:
+  vector_db:
+    image: semitechnologies/weaviate:1.28.2
+    restart: always
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    ports:
+      - "11000:8080"  
+      - "50051:50051"  
+    environment:
+      QUERY_DEFAULTS_LIMIT: '20'
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-openai'
+      ENABLE_MODULES: 'text2vec-openai'
+      CLUSTER_HOSTNAME: 'node1'
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+
+  checkpointer_db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: langgraph
+      POSTGRES_PASSWORD: z6eHD144wQvg
+      POSTGRES_DB: checkpointer_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - checkpointer_data:/var/lib/postgresql/data
+
+  agents_team:
+    build: .
+    container_name: agents_team
+    restart: always
+    ports:
+      - "10000:10000"
+    depends_on:
+      - vector_db
+      - checkpointer_db
+    environment:
+      # --- Supabase ---
+      SUPABASE_URL: "https://qmcdadefjwjxjylslljt.supabase.co"
+      SUPABASE_SERVICE_ROLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtY2RhZGVmandqeGp5bHNsbGp0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTM3NDU0NywiZXhwIjoyMDQwOTUwNTQ3fQ.uSeiiInAsSlzjQiZuwOgdqaZDshMSaSkzFGHPezzDN4"
+      # --- Checkpointer_DB ---
+      DB_URI: "postgresql://langgraph:z6eHD144wQvg@checkpointer_db:5432/checkpointer_db?sslmode=disable"
+      # --- Web_Search_Tool ---
+      TAVILY_SEARCH_API_KEY: "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"
+      # --- Weaviate_Vector_DB ---
+      WEAVIATE_HOST: "vector_db"
+      WEAVIATE_HOST_PORT: "8080"
+      WEAVIATE_GRPC_PORT: "50051"
+      INDEX_NAME: "rag_web_data"
+      # --- Retriever Parameters ---
+      RETRIEVER_SCORE_THRESHOLD: "0.6"
+      RETRIEVER_K: "10"
+      RETRIEVER_ALPHA: "0.5"
+      EMBEDDINGS_MODEL: "text-embedding-3-small"
+      # --- LLM / OpenAI ---
+      LLM: "gpt-4.1-mini"
+      OPENAI_API_KEY: "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"
+      # --- No buffer for logs ---
+      PYTHONUNBUFFERED: "1"
+
+volumes:
+  weaviate_data:
+  checkpointer_data:

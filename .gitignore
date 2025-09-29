@@ -1,0 +1,25 @@
+# Virtual environments
+venv/
+.env
+
+# Dependencies
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Others
+.DS_Store
