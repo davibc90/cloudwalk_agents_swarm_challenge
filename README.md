@@ -79,45 +79,12 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 ├── docker-compose.yaml
 ├── main.py
 ├── requirements.txt
-├── routes/
-│   ├── ingest_data_route.py
-│   └── invoke_route.py
-├── config/
-│   ├── supabase_client.py
-│   └── weaviate_client.py
-├── graphs/
-│   ├── main_graph.py
-│   ├── general_agent_subgraph.py
-│   └── other_components/
-│       ├── personality_node.py
-│       └── summarization_node.py
-├── prompts/
-│   ├── customer_service_agent_prompt.py
-│   ├── knowledge_agent_prompt.py
-│   ├── personality_prompt.py
-│   ├── secretary_agent_prompt.py
-│   ├── summarization_prompts.py
-│   └── supervisor_prompt.py
-├── tools/
-│   ├── customer_service_tools/
-│   │   ├── new_support_call.py
-│   │   └── retrieve_user_info.py
-│   ├── knowledge_agent/
-│   │   ├── retriever_tool.py
-│   │   └── web_search_tool.py
-│   ├── supervisor_tools/
-│   │   └── handoff_tools.py
-│   └── secretary_tools/
-│       ├── add_appointment.py
-│       └── get_appointments.py
-├── utils/
-│   ├── cleanup_messages_for_team.py
-│   ├── cmd_commands.txt
-│   ├── get_appointments_utils.py
-│   ├── get_date.py
-│   ├── logger_utils.py
-│   ├── moderation.py
-│   └── test_scenarios.txt
+├── routes/         -> invoke agenst swarm and data ingestion routes
+├── config/         -> configuration files for supabase e weaviate vector database clients
+├── graphs/         -> main graph, agents subgraphs and other components, such as summarization node and personality node
+├── prompts/        -> prompts for each agent
+├── tools/          -> tools for each agent
+├── utils/          -> utils functions for a variety of purposes
 └── README.md
 ```
 
