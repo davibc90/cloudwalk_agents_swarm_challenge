@@ -84,8 +84,13 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 │   └── weaviate_client.py
 ├── graphs/
 │   ├── main_graph.py
+|   |── general_agent_subgraph.py
 │   └── other_components/
 ├── prompts/
+│   ├── supervisor_prompt.py
+│   └── knowledge_agent_prompt.py
+│   └── customer_service_prompt.py
+│   └── secretary_prompt.py
 ├── tools/
 │   ├── supervisor_tools/
 │   ├── knowledge_agent/
@@ -138,18 +143,54 @@ docker-compose up -d
 
 1. **Ingest URL Data**  
    `POST /routes/ingest_data`  
-   - Ingests and indexes website or user data for the Knowledge agent.
+   - Ingests data from a given set of URLs, sent in the request body:
+   - Windows PowerShell command:
+     ```powershell
+curl -X POST http://127.0.0.1:10000/ingest_url_content `
+-H "Content-Type: application/json" `
+-d "{
+  \"urls\": [
+    \"https://www.infinitePay.io\",
+    \"https://www.infinitePay.io/maquininha\",
+    \"https://www.infinitePay.io/maquininha-celular\",
+    \"https://www.infinitePay.io/tap-to-pay\",
+    \"https://www.infinitePay.io/pdv\",
+    \"https://www.infinitePay.io/receba-na-hora\",
+    \"https://www.infinitePay.io/gestao-de-cobranca-2\",
+    \"https://www.infinitePay.io/gestao-de-cobranca\",
+    \"https://www.infinitePay.io/link-de-pagamento\",
+    \"https://www.infinitePay.io/loja-online\",
+    \"https://www.infinitePay.io/boleto\",
+    \"https://www.infinitePay.io/conta-digital\",
+    \"https://www.infinitePay.io/conta-pj\",
+    \"https://www.infinitePay.io/pix\",
+    \"https://www.infinitePay.io/pix-parcelado\",
+    \"https://www.infinitePay.io/emprestimo\",
+    \"https://www.infinitePay.io/cartao\",
+    \"https://www.infinitePay.io/rendimento\"
+  ]
+}"
+
+     ```
 
 2. **Invoke Swarm**  
    `POST /routes/invoke`  
-   - Body:
+   - Body for regular message flow:
      ```json
      {
        "message": "Your message here",
        "user_id": "user_123"
      }
      ```
-   - Returns JSON with agent-generated response.
+
+   - Body for human intervention response:
+     ```json
+     {
+       "message": "requested message when human intervention was triggered",
+       "user_id": "user_123",
+       "human_intervention_response": true
+     }
+     ```
 ---
 
 ## Agents & Tools
@@ -166,14 +207,15 @@ docker-compose up -d
 ## Bonus Features
 
 - **Fourth Agent**
-The secretary agent has been additionaly implemented with the objective of checking availability for booking new appointments and create new appointments registers in the table 'appointments' in the database.
-Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
-Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
+    - The secretary agent has been additionaly implemented with the objective of checking availability for booking new appointments and create new appointments registers in the table 'appointments' in the database.
+    - Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
+    - Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
 
 - **GuardRails** for input/output parsing  
     - GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
 
 ```python
+        ...
         # =========================
         # Input guardrail 
         # =========================
@@ -207,9 +249,9 @@ Availability check is done using the get_appointments tool and the new appointme
 
 ```
 
-    - The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
+- The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
     analyzing both the input and output messages, evaluating them against a set of categories.
-    - Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
+- Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
 
 
 - **Human Intervention** 
@@ -217,13 +259,13 @@ Availability check is done using the get_appointments tool and the new appointme
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
 
-* Inside the add_appointment tool, there is a call to the interrupt function.
+    - Inside the add_appointment tool, there is a call to the interrupt function.
 ```python
-        response = interrupt(  
-                f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
-                "Do you approve this appointment? \n"
-                "Please answer with 'YES' or 'NO'."
-            )
+    response = interrupt(  
+            f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
+            "Do you approve this appointment? \n"
+            "Please answer with 'YES' or 'NO'."
+        )
 ```
 
 * In ther request schema in the routes/invoke_route.py file, there is a field called "human_intervention" which flags if the current request is a response to address a human intervention interruption or a regular flow message.
@@ -237,8 +279,8 @@ Availability check is done using the get_appointments tool and the new appointme
 ```
 
 * Inside  the main_graph.py file, in the very end of the code, there are tow different invoking patterns:
-- Regular flow
-- Human intervention
+    - Regular flow
+    - Human intervention
 ```python
         ...
             if not human_intervention_response:
