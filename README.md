@@ -126,7 +126,7 @@ services:
 
 ## Building & Running
 
-Build and start all services:
+Navigate to the root directory and run the following command to build or download images and start all services:
 
 ```bash
 docker-compose up -d
@@ -171,7 +171,7 @@ Every time the user has fund transfers blocked, the only way to unlock them is t
 Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
 
 - **GuardRails** for input/output parsing  
-- GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
+    - GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
 
 ```python
         # =========================
@@ -207,15 +207,15 @@ Availability check is done using the get_appointments tool and the new appointme
 
 ```
 
-- The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
-analyzing both the input and output messages, evaluating them against a set of categories.
-- Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
+    - The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
+    analyzing both the input and output messages, evaluating them against a set of categories.
+    - Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
 
 
 - **Human Intervention** 
-- Every single call to the secretary agent's add_appointment tool requires human intervention. 
-- It iss necessary to approve the appointment before it is created.
-- If not approved, the user will be instructed to await for human contact.
+    - Every single call to the secretary agent's add_appointment tool requires human intervention. 
+    - It iss necessary to approve the appointment before it is created.
+    - If not approved, the user will be instructed to await for human contact.
 
 * Inside the add_appointment tool, there is a call to the interrupt function.
 ```python
