@@ -1,6 +1,6 @@
 # CloudWalk Agent Swarm
 
-A multi-agent system built as a coding challenge for CloudWalk.  
+A multi-agent system built as a coding challenge for CloudWalk in Python.  
 This application orchestrates several specialized AI agents to handle routing, knowledge retrieval, customer support, and scheduling tasks, all exposed via a FastAPI HTTP interface and Dockerized for easy deployment.
 
 ---
