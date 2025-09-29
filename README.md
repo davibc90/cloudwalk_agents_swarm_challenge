@@ -27,17 +27,15 @@ This application orchestrates several specialized AI agents to handle routing, k
 This repository implements an **Agent Swarm**—a coordinated set of AI agents that collaborate to process incoming user messages and fulfill a variety of tasks:
 
 1. **Supervisor (Router) Agent**  
-   - Entry point for all messages; routes requests to the appropriate sub-agent.
-   - One agent trasferring at a time
-   - Uses handoff tools to route messages to appropriate agents or finish working step 
+   - Entry point for all messages; routes requests to the appropriate sub-agent or finish the agent's work.
+   - Calls "personality_node" to generate a final response
 
 2. **Knowledge Agent**  
-   - Handles RAG-based retrieval over InfinitePay’s website content.  
-   - Uses LangChain and Weaviate vector store for context-rich responses.
+   - Handles RAG-based retrieval over InfinitePay’s website content ingested to Weaviate vector store.  
    - Web search tool for external information retrieval
 
 3. **Customer Support Agent**  
-   - Provides user-centric support using Supabase for user data and support calls  
+   - Provides user-centric support using Supabase as database
    - Includes tools for retrieving user information and registering support calls for human team assesment
 
 4. **Secretary Agent**  
@@ -47,13 +45,20 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 
 ---
 
-## Architecture
+## Graph Flow and Architecture
 
-Agents communicate via direct function calls within a central workflow graph (`graphs/main_graph.py`).  
-Subgraphs (`graphs/other_components`) define specialized processing nodes (e.g., summarization, personality).
+1st node -`Summarization node` (`graphs/other_components/summarization_node.py`) is used to generate summaries of the conversation, preventting the messages list of the chat history from growing too large. The necessity for summarization is checked at runtime, always before calling the supervisor agent to analyze the user's input, when a new message from the user is received.
 
-Prompts for each agent are defined under `prompts/` and loaded at runtime to guide LLM behavior.
-Tools live in `tools/` and are assigned to agents at runtime based on the agent's role.
+2nd node - `Supervisor agent` (`graphs/general_agent_subgraph.py`) 
+- Analyzes the user's input and routes requests to one or more agents in order to fulfill the user's request. 
+- Agents communicate via direct tool calls always within a central workflow graph (`graphs/main_graph.py`).  
+- Must await the response of the last transfered agent before transferring control to another agent or finish the execution.
+
+Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`) 
+- Each agent is a specialized with its own tools set and capabilities. 
+- Each agent subgraph is generated in the `graphs/general_agent_subgraph.py` file and composes the main graph as nodes.
+
+Last node - `Personality node` (`graphs/other_components/personality_node.py`) is used to generate a final response to the user, gathering all data from the conversation history into a single and final response to be deliverd to the user.
 
 ---
 
@@ -244,7 +249,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
     )
 ```
 
-* In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
+* In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention_response" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
 ```python
         # Request schema
         class QueryRequest(BaseModel):
@@ -275,7 +280,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
 ```json
      {
        "message": "requested response by human intervention goes here",
-       "user_id": "user_123",
+       "user_id": "client789",
        "human_intervention_response": true
      }
 ```
