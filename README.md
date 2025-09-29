@@ -73,11 +73,12 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 2nd node - `Supervisor agent` (`graphs/general_agent_subgraph.py`) 
 - Analyzes the user's input and routes requests to one or more agents in order to fulfill the user's request. 
 - Agents communicate via direct tool calls always within a central workflow graph (`graphs/main_graph.py`).  
-- Must await the response of the last transfered agent before transferring control to another agent or finish the execution.
+- Must await the response of the last transfered agent before transferring control to another agent or calling the personality node.
 
 Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`) 
 - Each agent is a specialized with its own tools set and capabilities. 
 - Each agent subgraph is generated in the `graphs/general_agent_subgraph.py` file and composes the main graph as nodes.
+- Mandatory to send back a response to the supervisor agent.
 
 Last node - `Personality node` (`graphs/other_components/personality_node.py`) 
 - Is used to generate a final response to the user, gathering all data from the conversation history.
