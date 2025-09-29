@@ -90,16 +90,6 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 
 ---
 
-## Prerequisites
-
-- Docker & Docker Compose  
-- Python 3.11  
-- An OpenAI API key (export as `OPENAI_API_KEY`)  
-- Supabase project URL & anon key (`SUPABASE_URL`, `SUPABASE_KEY`)  
-- Weaviate URL & API key (`WEAVIATE_URL`, `WEAVIATE_KEY`)
-
----
-
 ## Configuration
 
 Edit environment variables in the `docker-compose.yaml` or provide a `.env` file:
