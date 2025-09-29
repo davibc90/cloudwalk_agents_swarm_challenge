@@ -166,9 +166,9 @@ docker-compose up -d
 ## Bonus Features
 
 - **Fourth Agent**
-- The secretary agent has been additionaly implemented with the objective of checking availability for booking new appointments and create new appointments registers in the table 'appointments' in the database.
-- Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
-- Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
+The secretary agent has been additionaly implemented with the objective of checking availability for booking new appointments and create new appointments registers in the table 'appointments' in the database.
+Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
+Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
 
 - **GuardRails** for input/output parsing  
 - GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.

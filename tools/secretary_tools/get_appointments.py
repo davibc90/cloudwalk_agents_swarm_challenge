@@ -42,30 +42,11 @@
               ]
             }
 
-            Error payloads (examples):
-            {
-              "error": "INVALID_DATE",
-              "message": "Use the format MM/DD/YYYY. Ex: 09/29/2025.",
-              "rules": ["Only allowed between <today> and <max_day> (São Paulo zone)."]
-            }
-
-            {
-              "error": "<CODE from normalize_future_window>",
-              "message": "<Human-readable explanation>",
-              "now": "<current timestamp>",
-              "rules": [
-                "Do not suggest times outside available intervals.",
-                "Do not suggest times in the past.",
-                "It is PROHIBITED to suggest times outside business hours.",
-                "Suggestions must respect: start + duration <= end of the available interval."
-              ]
-            }
     Notes:
         - All validations and computations use São Paulo local time for day boundaries,
           but queries against Supabase are performed in UTC using the day's UTC window.
         - This tool returns only one day per call, but `queried_days`/grouping are
           preserved for extensibility.
-
 """
 
 from langchain_core.tools import tool
