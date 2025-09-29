@@ -61,9 +61,9 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 
 - **FastAPI** – HTTP server and routing  
 - **Docker & Docker Compose** – Containerization  
-- **LangChain / LangGraph** – Agent orchestration & RAG  
-- **Supabase** – User data storage  
-- **Weaviate** – Vector database for embeddings  
+- **LangChain / LangGraph** – Agent orchestration 
+- **Supabase** – User data, support calls, and appointment scheduling storage
+- **Weaviate** – Vector database for RAG queries and document storage  
 - **OpenAI API** – LLM back end & Moderation (GuardRails)  
 - Others: see [requirements.txt](requirements.txt)
 
