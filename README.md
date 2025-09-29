@@ -47,7 +47,28 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 
 ## Graph Flow and Architecture
 
-1st node -`Summarization node` (`graphs/other_components/summarization_node.py`) is used to generate summaries of the conversation, preventting the messages list of the chat history from growing too large. The necessity for summarization is checked at runtime, always before calling the supervisor agent to analyze the user's input, when a new message from the user is received.
+```python
+        ...
+        # Main Graph Nodes
+        graph.add_node("supervisor", supervisor_agent)
+        graph.add_node("knowledge_agent", knowledge_agent)
+        graph.add_node("customer_service_agent", customer_service_agent)
+        graph.add_node("secretary_agent", secretary_agent)
+        graph.add_node("summarization_node", summarization_node)
+        graph.add_node("personality_node", personality_node)
+
+        # Main Graph Edges
+        graph.add_edge(START, "summarization_node")
+        graph.add_edge("summarization_node", "supervisor")
+        graph.add_edge("knowledge_agent", "supervisor")
+        graph.add_edge("customer_service_agent", "supervisor")
+        graph.add_edge("secretary_agent", "supervisor")
+        graph.add_edge("personality_node", END)  
+        ...  
+```
+1st node -`Summarization node` (`graphs/other_components/summarization_node.py`) 
+- Used to generate summaries of the conversation, preventting the messages list of the chat history from growing too large. 
+- The necessity for summarization is checked at runtime, always before calling the supervisor agent to analyze the user's input
 
 2nd node - `Supervisor agent` (`graphs/general_agent_subgraph.py`) 
 - Analyzes the user's input and routes requests to one or more agents in order to fulfill the user's request. 
@@ -58,7 +79,9 @@ Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`)
 - Each agent is a specialized with its own tools set and capabilities. 
 - Each agent subgraph is generated in the `graphs/general_agent_subgraph.py` file and composes the main graph as nodes.
 
-Last node - `Personality node` (`graphs/other_components/personality_node.py`) is used to generate a final response to the user, gathering all data from the conversation history into a single and final response to be deliverd to the user.
+Last node - `Personality node` (`graphs/other_components/personality_node.py`) 
+- Is used to generate a final response to the user, gathering all data from the conversation history.
+- Generates a final response adding personality to the response.
 
 ---
 
