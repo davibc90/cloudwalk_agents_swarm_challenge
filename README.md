@@ -203,15 +203,6 @@ curl -X POST http://127.0.0.1:10000/invoke `
 
 ---
 
-## Agents & Tools
-
-- **Supervisor Agent** (`tools/supervisor_tools/handoff_tools.py`)  
-- **Knowledge Agent Tools** (`tools/knowledge_agent/retriever_tool.py`, `tools/knowledge_agent/web_search_tool.py`)  
-- **Customer Support Tools** (`tools/customer_service_tools/retrieve_user_info.py`, `new_support_call.py`)  
-- **Secretary Tools** (`tools/secretary_tools/add_appointment.py`, `get_appointments.py`)
-
----
-
 ## Bonus Features
 
 - **Fourth Agent**
