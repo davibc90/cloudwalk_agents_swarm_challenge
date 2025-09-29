@@ -126,7 +126,7 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 ## Prerequisites
 
 - Docker & Docker Compose  
-- Python 3.9+  
+- Python 3.11  
 - An OpenAI API key (export as `OPENAI_API_KEY`)  
 - Supabase project URL & anon key (`SUPABASE_URL`, `SUPABASE_KEY`)  
 - Weaviate URL & API key (`WEAVIATE_URL`, `WEAVIATE_KEY`)
@@ -152,7 +152,7 @@ services:
 
 ## Building & Running
 
-Navigate to the root directory and run the following command to build or download images and start all services:
+Navigate to the root directory and run the following command to build and download images and start all services:
 
 ```bash
 docker-compose up -d
@@ -168,29 +168,29 @@ docker-compose up -d
    - Windows PowerShell command:
 ```powershell
 curl -X POST http://127.0.0.1:10000/ingest_url_content `
-        -H "Content-Type: application/json" `
-        -d "{
-        \"urls\": [
-            \"https://www.infinitePay.io\",
-            \"https://www.infinitePay.io/maquininha\",
-            \"https://www.infinitePay.io/maquininha-celular\",
-            \"https://www.infinitePay.io/tap-to-pay\",
-            \"https://www.infinitePay.io/pdv\",
-            \"https://www.infinitePay.io/receba-na-hora\",
-            \"https://www.infinitePay.io/gestao-de-cobranca-2\",
-            \"https://www.infinitePay.io/gestao-de-cobranca\",
-            \"https://www.infinitePay.io/link-de-pagamento\",
-            \"https://www.infinitePay.io/loja-online\",
-            \"https://www.infinitePay.io/boleto\",
-            \"https://www.infinitePay.io/conta-digital\",
-            \"https://www.infinitePay.io/conta-pj\",
-            \"https://www.infinitePay.io/pix\",
-            \"https://www.infinitePay.io/pix-parcelado\",
-            \"https://www.infinitePay.io/emprestimo\",
-            \"https://www.infinitePay.io/cartao\",
-            \"https://www.infinitePay.io/rendimento\"
-        ]
-        }"
+-H "Content-Type: application/json" `
+-d "{
+\"urls\": [
+\"https://www.infinitePay.io\",
+\"https://www.infinitePay.io/maquininha\",
+\"https://www.infinitePay.io/maquininha-celular\",
+\"https://www.infinitePay.io/tap-to-pay\",
+\"https://www.infinitePay.io/pdv\",
+\"https://www.infinitePay.io/receba-na-hora\",
+\"https://www.infinitePay.io/gestao-de-cobranca-2\",
+\"https://www.infinitePay.io/gestao-de-cobranca\",
+\"https://www.infinitePay.io/link-de-pagamento\",
+\"https://www.infinitePay.io/loja-online\",
+\"https://www.infinitePay.io/boleto\",
+\"https://www.infinitePay.io/conta-digital\",
+\"https://www.infinitePay.io/conta-pj\",
+\"https://www.infinitePay.io/pix\",
+\"https://www.infinitePay.io/pix-parcelado\",
+\"https://www.infinitePay.io/emprestimo\",
+\"https://www.infinitePay.io/cartao\",
+\"https://www.infinitePay.io/rendimento\"
+]
+}"
 ```
 
 2. **Invoke Swarm**  
@@ -200,15 +200,6 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
      {
        "message": "Your message here",
        "user_id": "user_123"
-     }
-     ```
-
-   - Request body for human intervention response:
-     ```json
-     {
-       "message": "requested message when human intervention was triggered",
-       "user_id": "user_123",
-       "human_intervention_response": true
      }
      ```
 
@@ -228,10 +219,11 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 - **Fourth Agent**
     - The secretary agent has been additionaly implemented with the objective of checking availability for booking new appointments and create new appointments registers in the table 'appointments' in the database.
     - Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
-    - Availability check is done using the get_appointments tool and the new appointment are created using the add_appointment tool.
 
-- **GuardRails** for input/output parsing  
+- **Guardrails** for input/output parsing  
     - GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
+    - The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
+        analyzing both the input and output messages, evaluating them against a set of categories, including: hate speech, sexual content, violence, harassment, etc.
 
 ```python
         ...
@@ -267,18 +259,14 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 
 ```
 
-- The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
-    analyzing both the input and output messages, evaluating them against a set of categories.
-- Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
-
 ---
 
--  **Human Intervention** 
+- **Human Intervention** 
     - Every single call to the secretary agent's add_appointment tool requires human intervention. 
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
     - Inside the add_appointment tool, there is a call to the interrupt function.
-    
+
 ```python
     response = interrupt(  
         f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
@@ -314,4 +302,11 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
         ...
 ```
 
----
+* Request body for human intervention response:
+     ```json
+     {
+       "message": "requested response by human intervention",
+       "user_id": "user_123",
+       "human_intervention_response": true
+     }
+```
