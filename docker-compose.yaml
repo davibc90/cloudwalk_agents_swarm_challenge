@@ -10,8 +10,8 @@ services:
       - --scheme
       - http
     ports:
-      - "11000:8080"  
-      - "50051:50051"  
+      - "11000:8080"   # HTTP
+      - "50051:50051"  # gRPC
     environment:
       QUERY_DEFAULTS_LIMIT: '20'
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
@@ -34,9 +34,9 @@ services:
     volumes:
       - checkpointer_data:/var/lib/postgresql/data
 
-  agents_team:
+  agents_swarm:
     build: .
-    container_name: agents_team
+    container_name: agents_swarm
     restart: always
     ports:
       - "10000:10000"
@@ -47,25 +47,56 @@ services:
       # --- Supabase ---
       SUPABASE_URL: "https://qmcdadefjwjxjylslljt.supabase.co"
       SUPABASE_SERVICE_ROLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtY2RhZGVmandqeGp5bHNsbGp0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTM3NDU0NywiZXhwIjoyMDQwOTUwNTQ3fQ.uSeiiInAsSlzjQiZuwOgdqaZDshMSaSkzFGHPezzDN4"
+
       # --- Checkpointer_DB ---
       DB_URI: "postgresql://langgraph:z6eHD144wQvg@checkpointer_db:5432/checkpointer_db?sslmode=disable"
+
       # --- Web_Search_Tool ---
       TAVILY_SEARCH_API_KEY: "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"
-      # --- Weaviate_Vector_DB ---
-      WEAVIATE_HOST: "vector_db"
-      WEAVIATE_HOST_PORT: "8080"
-      WEAVIATE_GRPC_PORT: "50051"
-      INDEX_NAME: "rag_web_data"
-      # --- Retriever Parameters ---
-      RETRIEVER_SCORE_THRESHOLD: "0.6"
-      RETRIEVER_K: "10"
-      RETRIEVER_ALPHA: "0.5"
-      EMBEDDINGS_MODEL: "text-embedding-3-small"
+
+      # --- Parâmetros de Sumarização ---
+      SUMMARY_TOKENS: "300"                     # max tokens for summary
+      SUMMARIZATION_LLM: "gpt-4.1-nano"         # LLM used for summarization
+      SUMMARIZATION_LLM_TEMPERATURE: "0.15"     # temperature for summarization LLM
+      KEEP_LAST: "4"                            # number of last messages to keep in the chat history after summarization
+      STARTING_SUMMARY_INDEX: "5"               # starting index for summary to avoid duplication of the messages sent to the LLM
+
+      # --- Weaviate (Vector DB) ---
+      WEAVIATE_HOST: "vector_db"               
+      WEAVIATE_HOST_PORT: "8080"              
+      WEAVIATE_GRPC_PORT: "50051"              
+      INDEX_NAME: "rag_web_data"           # (collection name)
+
+      # --- Retriever Params ---
+      RETRIEVER_SCORE_THRESHOLD: "0.6"     # score threshold for retrieval
+      RETRIEVER_K: "10"                    # number of documents to retrieve
+      RETRIEVER_ALPHA: "0.5"               # alpha parameter for rag using hybrid search
+
+      # --- Embeddings Params ---
+      EMBEDDINGS_MODEL: "text-embedding-3-small"     # embeddings model for data ingestion and retrieval
+
       # --- LLM / OpenAI ---
-      LLM: "gpt-4.1-mini"
+      LLM: "gpt-4.1-mini"          # LLM used for the agents
+      LLM_TEMPERATURE: "0.15"                      
+      MAX_COMPLETION_TOKENS: "200"                 
+      TIMEOUT: "20"                                
       OPENAI_API_KEY: "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"
+
+      # --- Rate Limiter ---
+      REQUESTS_PER_SEC: "1"        # requests per second
+      CHECKING_SEC_INTERVAL: "1"   # checking interval in seconds
+      MAX_BUCKET_SIZE: "1"         # max bucket size
+
+      # --- Booking rules ---
+      BOOKING_STARTING_TIME: "09:00"    # booking starting time
+      BOOKING_END_TIME: "18:00"         # booking end time
+      BOOKING_DURATION_MINUTES: "30"    # booking duration in minutes
+      BOOKING_STEP_MINUTES: "30"        # booking step in minutes
+      AVAILABLE_WEEKDAYS: "monday,tuesday, wednesday, thursday, friday, saturday"  # available weekdays
+      MAX_BOOK_AHEAD_DAYS: "15"         # max book ahead days
+
       # --- No buffer for logs ---
-      PYTHONUNBUFFERED: "1"
+      PYTHONUNBUFFERED: "1"             
 
 volumes:
   weaviate_data:
