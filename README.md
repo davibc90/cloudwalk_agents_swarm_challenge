@@ -5,6 +5,18 @@ This application orchestrates several specialized AI agents to handle routing, k
 
 ---
 
+## Frameworks & Libraries
+
+- **FastAPI** – HTTP server and routing  
+- **Docker & Docker Compose** – Containerization  
+- **LangChain / LangGraph** – Agent orchestration 
+- **Supabase** – User data, support calls, and appointment scheduling storage
+- **Weaviate** – Vector database for RAG queries and document storage  
+- **OpenAI API** – LLM back end & Moderation (GuardRails)  
+- Others: see [requirements.txt](requirements.txt)
+
+---
+
 ## Table of Contents
 
 - [Project Overview](#project-overview)  
@@ -83,18 +95,6 @@ Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`)
 Last node - `Personality node` (`graphs/other_components/personality_node.py`) 
 - Is used to generate a final response to the user, gathering all data from the conversation history.
 - Generates a final response adding personality to the response.
-
----
-
-## Frameworks & Libraries
-
-- **FastAPI** – HTTP server and routing  
-- **Docker & Docker Compose** – Containerization  
-- **LangChain / LangGraph** – Agent orchestration 
-- **Supabase** – User data, support calls, and appointment scheduling storage
-- **Weaviate** – Vector database for RAG queries and document storage  
-- **OpenAI API** – LLM back end & Moderation (GuardRails)  
-- Others: see [requirements.txt](requirements.txt)
 
 ---
 
