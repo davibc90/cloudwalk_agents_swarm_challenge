@@ -211,6 +211,7 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
        "human_intervention_response": true
      }
      ```
+
 ---
 
 ## Agents & Tools
@@ -219,8 +220,6 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 - **Knowledge Agent Tools** (`tools/knowledge_agent/retriever_tool.py`, `tools/knowledge_agent/web_search_tool.py`)  
 - **Customer Support Tools** (`tools/customer_service_tools/retrieve_user_info.py`, `new_support_call.py`)  
 - **Secretary Tools** (`tools/secretary_tools/add_appointment.py`, `get_appointments.py`)
-
-
 
 ---
 
@@ -251,7 +250,6 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
             raise HTTPException(status_code=400, detail=str(me))
 
         ...
-
         # =========================
         # Output guardrail 
         # =========================
@@ -273,6 +271,7 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
     analyzing both the input and output messages, evaluating them against a set of categories.
 - Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
 
+---
 
 -  **Human Intervention** 
     - Every single call to the secretary agent's add_appointment tool requires human intervention. 
