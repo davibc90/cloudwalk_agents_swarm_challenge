@@ -36,11 +36,11 @@ This application orchestrates several specialized AI agents to handle routing, k
 This repository implements an **Agent Swarm**—a coordinated set of AI agents that collaborate to process incoming user messages and fulfill a variety of tasks:
 
 1. **Supervisor (Router) Agent**  
-   - Entry point for all messages; routes requests to the appropriate sub-agent or finish the agent's work.
-   - Calls "personality_node" to generate a final response
+   - Entry point for all messages; routes requests to the appropriate sub-agent or finish the agents work
+   - Calls "personality_node" in order to generate a final response
 
 2. **Knowledge Agent**  
-   - Handles RAG-based retrieval over InfinitePay’s website content ingested to Weaviate vector store.  
+   - Handles RAG-based retrieval over InfinitePay’s website content ingested to Weaviate vector store  
    - Web search tool for external information retrieval
 
 3. **Customer Support Agent**  
@@ -64,12 +64,12 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 ├── docker-compose.yaml
 ├── main.py
 ├── requirements.txt
-├── routes/         -> invoking agents swarm and data ingestion routes
-├── config/         -> configuration files for supabase e weaviate vector database clients
-├── graphs/         -> main graph, agents subgraphs and other components, such as summarization node and personality node
-├── prompts/        -> prompts for each agent
-├── tools/          -> tools for each agent
-├── utils/          -> utils functions for a variety of purposes
+├── routes/      -> invoking agents swarm and data ingestion routes
+├── config/      -> configuration files for supabase e weaviate vector database clients
+├── graphs/      -> main graph, agents subgraphs and other components, such as summarization node and personality node
+├── prompts/     -> prompts for each agent
+├── tools/       -> tools for each agent
+├── utils/       -> utils functions for a variety of purposes
 └── README.md
 ```
 
@@ -156,30 +156,32 @@ docker-compose up -d
 ```
    - Windows PowerShell command for data ingestion:
 ```powershell
-curl -X POST http://127.0.0.1:10000/ingest_url_content `
--H "Content-Type: application/json" `
--d "{
-\"urls\": [
-\"https://www.infinitePay.io\",
-\"https://www.infinitePay.io/maquininha\",
-\"https://www.infinitePay.io/maquininha-celular\",
-\"https://www.infinitePay.io/tap-to-pay\",
-\"https://www.infinitePay.io/pdv\",
-\"https://www.infinitePay.io/receba-na-hora\",
-\"https://www.infinitePay.io/gestao-de-cobranca-2\",
-\"https://www.infinitePay.io/gestao-de-cobranca\",
-\"https://www.infinitePay.io/link-de-pagamento\",
-\"https://www.infinitePay.io/loja-online\",
-\"https://www.infinitePay.io/boleto\",
-\"https://www.infinitePay.io/conta-digital\",
-\"https://www.infinitePay.io/conta-pj\",
-\"https://www.infinitePay.io/pix\",
-\"https://www.infinitePay.io/pix-parcelado\",
-\"https://www.infinitePay.io/emprestimo\",
-\"https://www.infinitePay.io/cartao\",
-\"https://www.infinitePay.io/rendimento\"
-]
-}"
+Invoke-RestMethod -Uri "http://127.0.0.1:10000/ingest_url_content" `
+-Method Post `
+-ContentType "application/json" `
+-Body '{
+  "urls": [
+    "https://www.infinitePay.io",
+    "https://www.infinitePay.io/maquininha",
+    "https://www.infinitePay.io/maquininha-celular",
+    "https://www.infinitePay.io/tap-to-pay",
+    "https://www.infinitePay.io/pdv",
+    "https://www.infinitePay.io/receba-na-hora",
+    "https://www.infinitePay.io/gestao-de-cobranca-2",
+    "https://www.infinitePay.io/gestao-de-cobranca",
+    "https://www.infinitePay.io/link-de-pagamento",
+    "https://www.infinitePay.io/loja-online",
+    "https://www.infinitePay.io/boleto",
+    "https://www.infinitePay.io/conta-digital",
+    "https://www.infinitePay.io/conta-pj",
+    "https://www.infinitePay.io/pix",
+    "https://www.infinitePay.io/pix-parcelado",
+    "https://www.infinitePay.io/emprestimo",
+    "https://www.infinitePay.io/cartao",
+    "https://www.infinitePay.io/rendimento"
+  ]
+}'
+
 ```
 
 ### STEP 2: **Invoke Swarm**  
