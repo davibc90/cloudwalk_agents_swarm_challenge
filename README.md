@@ -1,7 +1,21 @@
-# CloudWalk Agent Swarm
+# CloudWalk Agents Swarm Challenge (by Davi Carneiro)
 
 A multi-agent system built as a coding challenge for CloudWalk in Python.  
 This application orchestrates several specialized AI agents to handle routing, knowledge retrieval, customer support, and scheduling tasks, all exposed via a FastAPI HTTP interface and Dockerized for easy deployment.
+
+---
+
+## Table of Contents
+ 
+- [Frameworks & Libraries](#frameworks--libraries) 
+- [Project Overview](#project-overview)  
+- [Directory Structure](#directory-structure)  
+- [Graph Flow and Architecture](#graph-flow-and-architecture)  
+- [Configuration](#configuration)  
+- [Building & Running](#building--running)  
+- [API Endpoints](#api-endpoints)  
+- [Bonus Features](#bonus-features)  
+- [Testing & Debugging](#testing--debugging)  
 
 ---
 
@@ -14,23 +28,6 @@ This application orchestrates several specialized AI agents to handle routing, k
 - **Weaviate** – Vector database for RAG queries and document storage  
 - **OpenAI API** – LLM back end & Moderation (GuardRails)  
 - Others: see [requirements.txt](requirements.txt)
-
----
-
-## Table of Contents
-
-- [Project Overview](#project-overview)  
-- [Architecture](#architecture)  
-- [Frameworks & Libraries](#frameworks--libraries)  
-- [Directory Structure](#directory-structure)  
-- [Prerequisites](#prerequisites)  
-- [Configuration](#configuration)  
-- [Building & Running](#building--running)  
-- [API Endpoints](#api-endpoints)  
-- [Agents & Tools](#agents--tools)  
-- [Bonus Features](#bonus-features)  
-- [Testing & Debugging](#testing--debugging)  
-- [Contributing](#contributing)  
 
 ---
 
@@ -67,7 +64,7 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 ├── docker-compose.yaml
 ├── main.py
 ├── requirements.txt
-├── routes/         -> invoke agenst swarm and data ingestion routes
+├── routes/         -> invoking agents swarm and data ingestion routes
 ├── config/         -> configuration files for supabase e weaviate vector database clients
 ├── graphs/         -> main graph, agents subgraphs and other components, such as summarization node and personality node
 ├── prompts/        -> prompts for each agent
@@ -299,3 +296,4 @@ curl -X POST http://127.0.0.1:10000/invoke `
        "human_intervention_response": true
      }
 ```
+
