@@ -191,7 +191,7 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
             \"https://www.infinitePay.io/rendimento\"
         ]
         }"
-     ```
+```
 
 2. **Invoke Swarm**  
    `POST /routes/invoke`  
@@ -277,8 +277,8 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
     - Every single call to the secretary agent's add_appointment tool requires human intervention. 
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
-
     - Inside the add_appointment tool, there is a call to the interrupt function.
+    
 ```python
     response = interrupt(  
         f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
