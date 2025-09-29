@@ -125,12 +125,7 @@ docker-compose up -d
    - Request body:
 ```json
 {
-    "urls": [
-        "url1", 
-        "url2",
-        "url3", 
-        ...
-        ]
+    "urls": ["url1", "url2","url3", "..."]
 }
 ```
    - Windows PowerShell command for data ingestion:
