@@ -73,9 +73,12 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 
 ```text
 .
+├── .dockerignore
+├── .gitignore
 ├── Dockerfile
 ├── docker-compose.yaml
 ├── main.py
+├── requirements.txt
 ├── routes/
 │   ├── ingest_data_route.py
 │   └── invoke_route.py
@@ -84,20 +87,37 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 │   └── weaviate_client.py
 ├── graphs/
 │   ├── main_graph.py
-|   |── general_agent_subgraph.py
+│   ├── general_agent_subgraph.py
 │   └── other_components/
+│       ├── personality_node.py
+│       └── summarization_node.py
 ├── prompts/
-│   ├── supervisor_prompt.py
-│   └── knowledge_agent_prompt.py
-│   └── customer_service_prompt.py
-│   └── secretary_prompt.py
-|
+│   ├── customer_service_agent_prompt.py
+│   ├── knowledge_agent_prompt.py
+│   ├── personality_prompt.py
+│   ├── secretary_agent_prompt.py
+│   ├── summarization_prompts.py
+│   └── supervisor_prompt.py
 ├── tools/
-│   ├── supervisor_tools/
-│   ├── knowledge_agent/
 │   ├── customer_service_tools/
+│   │   ├── new_support_call.py
+│   │   └── retrieve_user_info.py
+│   ├── knowledge_agent/
+│   │   ├── retriever_tool.py
+│   │   └── web_search_tool.py
+│   ├── supervisor_tools/
+│   │   └── handoff_tools.py
 │   └── secretary_tools/
+│       ├── add_appointment.py
+│       └── get_appointments.py
 ├── utils/
+│   ├── cleanup_messages_for_team.py
+│   ├── cmd_commands.txt
+│   ├── get_appointments_utils.py
+│   ├── get_date.py
+│   ├── logger_utils.py
+│   ├── moderation.py
+│   └── test_scenarios.txt
 └── README.md
 ```
 
@@ -175,7 +195,7 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 
 2. **Invoke Swarm**  
    `POST /routes/invoke`  
-   - Body for regular message flow:
+   - Request body for regular message flow:
      ```json
      {
        "message": "Your message here",
@@ -183,7 +203,7 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
      }
      ```
 
-   - Body for human intervention response:
+   - Request body for human intervention response:
      ```json
      {
        "message": "requested message when human intervention was triggered",
