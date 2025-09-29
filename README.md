@@ -153,12 +153,12 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 2. STEP 2: **Invoke Swarm**  
    `POST /routes/invoke`  
    - Request body for regular message flow:
-     ```json
-     {
-       "message": "Your message here",
-       "user_id": "client789"
-     }
-     ```
+```json
+{
+    "message": "Your message here",
+    "user_id": "client789"
+}
+```
 
 ---
 
