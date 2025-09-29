@@ -162,9 +162,9 @@ docker-compose up -d
 
 ## API Endpoints
 
-1. **Ingest URL Data**  
+1. STEP 1: **Ingest URL Data**  
    `POST /routes/ingest_data`  
-   - Ingests data from a given set of URLs, sent in the request body:
+   - Ingests data from a given set of URLs.
    - Windows PowerShell command:
 ```powershell
 curl -X POST http://127.0.0.1:10000/ingest_url_content `
@@ -193,13 +193,13 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 }"
 ```
 
-2. **Invoke Swarm**  
+2. STEP 2: **Invoke Swarm**  
    `POST /routes/invoke`  
    - Request body for regular message flow:
      ```json
      {
        "message": "Your message here",
-       "user_id": "user_123"
+       "user_id": "client789"
      }
      ```
 
@@ -303,9 +303,9 @@ curl -X POST http://127.0.0.1:10000/ingest_url_content `
 ```
 
 * Request body for human intervention response:
-     ```json
+```json
      {
-       "message": "requested response by human intervention",
+       "message": "requested response by human intervention goes here",
        "user_id": "user_123",
        "human_intervention_response": true
      }
