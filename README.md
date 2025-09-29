@@ -91,6 +91,7 @@ Tools live in `tools/` and are assigned to agents at runtime based on the agent'
 │   └── knowledge_agent_prompt.py
 │   └── customer_service_prompt.py
 │   └── secretary_prompt.py
+|
 ├── tools/
 │   ├── supervisor_tools/
 │   ├── knowledge_agent/
@@ -145,8 +146,8 @@ docker-compose up -d
    `POST /routes/ingest_data`  
    - Ingests data from a given set of URLs, sent in the request body:
    - Windows PowerShell command:
-     ```powershell
-        curl -X POST http://127.0.0.1:10000/ingest_url_content `
+```powershell
+curl -X POST http://127.0.0.1:10000/ingest_url_content `
         -H "Content-Type: application/json" `
         -d "{
         \"urls\": [
@@ -253,7 +254,7 @@ docker-compose up -d
 - Evaluated categories include: hate speech, sexual content, violence, harassment, etc.
 
 
-- **Human Intervention** 
+-  **Human Intervention** 
     - Every single call to the secretary agent's add_appointment tool requires human intervention. 
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
@@ -261,13 +262,13 @@ docker-compose up -d
     - Inside the add_appointment tool, there is a call to the interrupt function.
 ```python
     response = interrupt(  
-            f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
-            "Do you approve this appointment? \n"
-            "Please answer with 'YES' or 'NO'."
-        )
+        f"Trying to call `add_appointment` with args {{'user_id': {user_id}, 'start_time': {start_time}, 'end_time': {end_time}}}. "
+        "Do you approve this appointment? \n"
+        "Please answer with 'YES' or 'NO'."
+    )
 ```
 
-* In ther request schema in the routes/invoke_route.py file, there is a field called "human_intervention" which flags if the current request is a response to address a human intervention interruption or a regular flow message.
+* In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
 ```python
         # Request schema
         class QueryRequest(BaseModel):
@@ -277,9 +278,7 @@ docker-compose up -d
 
 ```
 
-* Inside  the main_graph.py file, in the very end of the code, there are tow different invoking patterns:
-    - Regular flow
-    - Human intervention
+* Inside the `main_graph.py` file, in the very end of the code, there are two different invoking patterns:
 ```python
         ...
             if not human_intervention_response:
