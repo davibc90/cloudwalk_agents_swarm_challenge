@@ -57,6 +57,27 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 
 ---
 
+## Directory Structure
+
+```text
+.
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yaml
+├── main.py
+├── requirements.txt
+├── routes/         -> invoke agenst swarm and data ingestion routes
+├── config/         -> configuration files for supabase e weaviate vector database clients
+├── graphs/         -> main graph, agents subgraphs and other components, such as summarization node and personality node
+├── prompts/        -> prompts for each agent
+├── tools/          -> tools for each agent
+├── utils/          -> utils functions for a variety of purposes
+└── README.md
+```
+
+---
+
 ## Graph Flow and Architecture
 
 ```python
@@ -95,27 +116,6 @@ Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`)
 Last node - `Personality node` (`graphs/other_components/personality_node.py`) 
 - Is used to generate a final response to the user, gathering all data from the conversation history.
 - Generates a final response adding personality to the response.
-
----
-
-## Directory Structure
-
-```text
-.
-├── .dockerignore
-├── .gitignore
-├── Dockerfile
-├── docker-compose.yaml
-├── main.py
-├── requirements.txt
-├── routes/         -> invoke agenst swarm and data ingestion routes
-├── config/         -> configuration files for supabase e weaviate vector database clients
-├── graphs/         -> main graph, agents subgraphs and other components, such as summarization node and personality node
-├── prompts/        -> prompts for each agent
-├── tools/          -> tools for each agent
-├── utils/          -> utils functions for a variety of purposes
-└── README.md
-```
 
 ---
 
