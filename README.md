@@ -205,7 +205,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
 ```python
         ...
         # =========================
-        # Input guardrail 
+        # Input guardrail (pretty much the same for output)
         # =========================
         try:
             mod_result = assert_safe_input_or_raise(message, user_id="system")
