@@ -44,7 +44,7 @@ def initialize_retriever_for_rag():
     retriever_tool = create_retriever_tool(
         retriever, 
         name="retriever_tool",
-        description="Use this tool to retrieve relevant documents from the knowledge base based on the user's query"
+        description="Use this tool to retrieve relevant documents from the knowledge base based on the user's input"
     )
 
     return retriever_tool
