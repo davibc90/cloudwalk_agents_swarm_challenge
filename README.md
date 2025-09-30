@@ -54,12 +54,12 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 ├── docker-compose.yaml
 ├── main.py
 ├── requirements.txt
-├── routes/      -> invoking agents swarm and data ingestion routes
-├── config/      -> configuration files for supabase e weaviate vector database clients
-├── graphs/      -> main graph, agents subgraphs, summarization and personality nodes
-├── prompts/     -> prompts for each agent
-├── tools/       -> tools for each agent
-├── utils/       -> utils functions for a variety of purposes
+├── routes/   -> invoking agents swarm and data ingestion routes
+├── config/   -> configuration files for supabase e weaviate vector database clients
+├── graphs/   -> main graph, agents subgraphs, summarization and personality nodes
+├── prompts/  -> prompts for each agent
+├── tools/    -> tools for each agent
+├── utils/    -> utils functions for a variety of purposes
 └── README.md
 ```
 
