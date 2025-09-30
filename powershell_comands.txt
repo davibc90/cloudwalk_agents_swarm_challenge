@@ -1,4 +1,5 @@
-POWERSHELL COMMANDS FOR TESTS AND DATA INGESTION
+
+!!PowerShell commands for tests and data ingestion!!
 
 ==============================
 DATA INGESTION COMMAND
@@ -60,6 +61,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"Quais as principais notícias de São Paulo hoje?","user":"client789"}'
 
+-----------------------------
 
 # PERSISTENCE TEST
 curl -X POST "http://localhost:10000/langgraph/invoke" `
@@ -70,6 +72,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"What is my name?","user":"client789"}'
 
+-----------------------------
 
 # CUSTOMER SERVICE TOOLS TEST
 curl -X POST "http://localhost:10000/langgraph/invoke" `
@@ -78,14 +81,13 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
-  -d '{"message":"It did not work, I am not used with technology...Is there any other way to do it?","user":"client789"}'
-
-curl -X POST "http://localhost:10000/langgraph/invoke" `
-  -H "Content-Type: application/json" `
   -d '{"message":"It is showing error 321 in my credit card machine...","user":"client789"}'
 
+-----------------------------
 
 # SECRETARY TOOLS TEST
+# first moment, it will be routed to customer service agent
+# After retrieving user info, it will be routed to secretary agent
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"Why I am not able to make transfers?","user":"client789"}'
@@ -94,6 +96,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"Could it be next friday at noon?","user":"client789"}'
 
+-----------------------------
 
 # HUMAN INTERVENTION
 curl -X POST "http://localhost:10000/langgraph/invoke" `
@@ -104,11 +107,14 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"NO","user":"client789","human_intervention_response":true}'
 
+-----------------------------
 
 # DATE/TIME CONTEXT
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"What is the current date and time?","user":"client789"}'
+
+-----------------------------
 
 
 # GUARDRAILS TEST
