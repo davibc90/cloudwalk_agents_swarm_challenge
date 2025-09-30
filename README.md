@@ -1,14 +1,14 @@
 # CloudWalk Agents Swarm Challenge (by Davi Carneiro)
 
 A multi-agent system built as a coding challenge for CloudWalk in Python.  
-This application orchestrates several specialized AI agents to handle routing, knowledge retrieval, customer support, and scheduling tasks, all exposed via a FastAPI HTTP interface and Dockerized for easy deployment.
+This application orchestrates several specialized AI agents to handle routing, knowledge retrieval, customer support, and scheduling tasks, all exposed via a FastAPI HTTP interface and containerized for easy deployment.
 
 ---
 
 ## Frameworks & Libraries
 
 - **FastAPI** – HTTP server and routing  
-- **Docker & Docker Compose** – Containerization  
+- **Docker** – Containerization  
 - **LangChain / LangGraph** – Agents orchestration 
 - **Supabase** – User data, support calls, and appointment scheduling storage
 - **Weaviate** – Vector database for RAG queries and document storage  
@@ -154,7 +154,6 @@ docker-compose up -d
     "user_id": "client789"
 }
 ```
-
 
 ---
 
@@ -336,7 +335,7 @@ def initialize_retriever_for_rag():
 
 **Once all services are running, it is possible to test the agents swarm by using the commands inside `powershell_comands.txt`, in the root directory of this repository**
 
-**The following unit and integration tests have been performed:**
+**The following unit and integration tests have been performed so far:**
 
 **Knowledge Agent**
 - Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
@@ -363,7 +362,7 @@ def initialize_retriever_for_rag():
 - Consists in testing the summarization functionality, observing the conversation history and the summary after a certain number of messages. The old chat history should be deleted after the summarization process and the summary should be added to the conversation history, preserving the conversation context and keeping the very last messages (default last 4 messages).
 
 **Date/Time Context Test**
-- Consists in testing if the swarm knows the current date and time
+- Consists in testing if the agents swarm knows the current date and time
 
 **Further Tests**
 - Trace and analyze inputs and outputs of the graph in many different scenarios using evals solutions, such as LangSmith Studio
@@ -371,7 +370,7 @@ def initialize_retriever_for_rag():
 ---
 
 ## Supabase 
-- Project Graphical Interface URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
+- Project Web User Interface URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
 - Tables:
   - **appointments**: appointments records, queried and registered by secretary agent
   - **user_info**: user info records, retrieved by customer service agent, before any other action
