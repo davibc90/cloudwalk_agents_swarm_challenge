@@ -24,23 +24,19 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 1. **Supervisor (Router) Agent**  
    - Entry point for all messages; routes requests to the appropriate agent or finish the agents work
    - Calls "personality_node" in order to generate a final response
-   - Tools: Transfer control to any other agent, finish the agents work 
     
 2. **Knowledge Agent**  
    - Handles RAG-based retrieval over InfinitePay’s website content ingested to Weaviate vector store  
    - Web search tool for external information retrieval
-   - Tools: Retrieve information from the knowledge base, search for external information on web
 
 3. **Customer Support Agent**  
    - Provides user-centric support using Supabase as database
    - Includes tools for retrieving user information and registering support calls for human team assesment
-   - Tools: Retrieve user information, register support call
 
 4. **Secretary Agent**  
    - Manages appointment scheduling with human intervention hooks
    - Online meetings are booked for identity checking purposes when fund transfers are blocked for the user  
    - Integrates a simple calendar toolset able to check availability and add new appointments 
-   - Tools: Check availability for new online meetings, add new online meeting in the callendar
 
 ---
 
