@@ -191,6 +191,73 @@ curl -X POST http://127.0.0.1:10000/invoke `
 
 ---
 
+## RAG Pipeline Description
+
+1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section
+```python
+@router.post("/ingest_url_content", response_model=IngestResponse)
+def ingest(req: IngestRequest) -> IngestResponse:
+    logger.info(f"Received ingestion request with {len(req.urls)} URLs")
+
+    # Urls validation
+    if not req.urls:
+        logger.error("Empty request received - no URLs provided")
+        raise HTTPException(status_code=400, detail="Please, send at least one URL...")
+
+    # Ingestion
+    index_name = INDEX_NAME
+    results = ingest_urls_to_weaviate([str(u) for u in req.urls], index_name=index_name)
+    total_chunks = sum(r.chunks for r in results if r.ok)
+
+    logger.info(f"Ingestion completed. Index: {index_name}, Total chunks: {total_chunks}")
+    return IngestResponse(collection=index_name, results=results, total_chunks=total_chunks)
+```
+
+2. Loop execution for data fetching and processing, each url at a time, always using Langchain components:
+    - WebBaseLoader is used to fetch the data from the url
+    - RecursiveCharacterTextSplitter is used to split the data into chunks
+    - OpenAIEmbeddings is used to generate embeddings for the data
+    - WeaviateVectorStore interface is used to store the data in the vector db
+
+3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in `tools/knowledge_agent/retriever_tool.py`:
+```python
+...
+def initialize_retriever_for_rag():
+
+    # Defines the embeddings model
+    embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY, model=EMBEDDINGS_MODEL)
+    weaviate_client = create_weaviate_client()
+
+    # Initializes the WeaviateVectorStore
+    db = WeaviateVectorStore(
+        embedding=embeddings,
+        client=weaviate_client,
+        index_name=INDEX_NAME,
+        text_key="content",
+        use_multi_tenancy=False
+    )
+
+    # Returns the configured retriever based on the interface with the vector store
+    retriever = db.as_retriever(
+        search_type="similarity_score_threshold",
+        search_kwargs={
+            "score_threshold": float(RETRIEVER_SCORE_THRESHOLD),
+            "k": int(RETRIEVER_K),
+            "alpha": float(RETRIEVER_ALPHA),
+        }
+    )
+
+    # Returns the configured retriever tool ready for use by the agent
+    retriever_tool = create_retriever_tool(
+        retriever, 
+        name="retriever_tool",
+        description="Use this tool to retrieve relevant documents from the knowledge base based on the user's query"
+    )
+    return retriever_tool
+```
+
+---
+
 ## Bonus Features
 
 - **Fourth Agent**
@@ -291,7 +358,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"How can I use my phone as a card machine?","user":"client789"}'
 ```
 
-- Web Search Tool test, asking for news and events:
+- Web Search Tool test, asking for news and events, always after confirming the information is not inside the knowledge base:
 ```powershell
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
@@ -305,14 +372,14 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 ---
 
 **Customer Service Agent**
-- Retrieve User Info Tool test:
+- Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved:
 ```powershell
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"I can''t sign in to my account.","user":"client789"}'
 ```
 
-- New Support Call Tool test:
+- New Support Call Tool test, in order to evaluate if the agent registers a new support call when the situation is covered in the set of issues which describes when it should be done:
 ```powershell
 # after sending the messge above, testing the retrieval of user info
 curl -X POST "http://localhost:10000/langgraph/invoke" `
@@ -335,7 +402,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"Why I am not able to make transfers?","user":"client789"}'
 ```
-
 - Add Appointment Tool test:
 ```powershell
 curl -X POST "http://localhost:10000/langgraph/invoke" `
