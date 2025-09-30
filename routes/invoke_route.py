@@ -33,12 +33,6 @@
         - Failed to obtain a response from the agents team.
         - Output blocked by moderation.
         - Unexpected internal errors during processing.
-
-    ### Logging
-    - Logs the reception of the request.
-    - Records results of moderation checks (input and output).
-    - Issues warnings for blocked inputs or outputs.
-    - Reports errors when agent calls fail.
 """
 
 from typing import Optional
