@@ -514,9 +514,9 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 ---
 
 ## Other LLM Tools
-- WindSurf: IDE used for coding with strong auto-completion feature
-- Cline: integrated to WindSurf, it is a software development assistant 
-- ChatGPT
+1. WindSurf: IDE used for coding with strong auto-completion feature
+2. Cline: integrated to WindSurf, it is a software development assistant 
+3. ChatGPT
 
 A big set of tasks were accomplished using the tools above, such as:
   - Building algorithms sketches and problem-solving strategies 
