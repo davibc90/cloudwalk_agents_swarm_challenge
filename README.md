@@ -334,9 +334,9 @@ def initialize_retriever_for_rag():
 
 ## Testing 
 
-- Once all services are running, it is possible to test the agents swarm by using the commands inside `powershell_comands.txt`, in the root directory of this repository
+**Once all services are running, it is possible to test the agents swarm by using the commands inside `powershell_comands.txt`, in the root directory of this repository**
 
-- The following unit and integration tests have been performed:
+**The following unit and integration tests have been performed:**
 
 **Knowledge Agent**
 - Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
