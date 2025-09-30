@@ -1,5 +1,39 @@
+POWERSHELL COMMANDS FOR TESTS AND DATA INGESTION
 
-=============================================================================
+==============================
+DATA INGESTION COMMAND
+==============================
+
+Invoke-RestMethod -Uri "http://127.0.0.1:10000/ingest_url_content" `
+-Method Post `
+-ContentType "application/json" `
+-Body '{
+  "urls": [
+    "https://www.infinitePay.io",
+    "https://www.infinitePay.io/maquininha",
+    "https://www.infinitePay.io/maquininha-celular",
+    "https://www.infinitePay.io/tap-to-pay",
+    "https://www.infinitePay.io/pdv",
+    "https://www.infinitePay.io/receba-na-hora",
+    "https://www.infinitePay.io/gestao-de-cobranca-2",
+    "https://www.infinitePay.io/gestao-de-cobranca",
+    "https://www.infinitePay.io/link-de-pagamento",
+    "https://www.infinitePay.io/loja-online",
+    "https://www.infinitePay.io/boleto",
+    "https://www.infinitePay.io/conta-digital",
+    "https://www.infinitePay.io/conta-pj",
+    "https://www.infinitePay.io/pix",
+    "https://www.infinitePay.io/pix-parcelado",
+    "https://www.infinitePay.io/emprestimo",
+    "https://www.infinitePay.io/cartao",
+    "https://www.infinitePay.io/rendimento"
+  ]
+}'
+
+
+==============================
+TESTS COMMANDS
+==============================
 
 # RAG QUESTIONS
 curl -X POST "http://localhost:10000/langgraph/invoke" `
