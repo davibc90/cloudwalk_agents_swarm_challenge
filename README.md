@@ -324,7 +324,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 **Secretary Agent Tools Test**
 - Checking availability for booking new appointments (get_appointments tool)
 ```powershell
-# first of all, is going to be routed to customer service agent
+# first moment, it will be routed to customer service agent
 # After retrieving user info, it will be routed to secretary agent
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
@@ -396,4 +396,13 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"What is the current date and time?","user":"client789"}'
+```
+
+---
+
+## Supabase Credentials
+- Project URL: https://qmcdadefjwjxjylslljt.supabase.co
+```text
+- Email: davibc.16@gmail.com
+- Password: CloudWalk@2025
 ```
