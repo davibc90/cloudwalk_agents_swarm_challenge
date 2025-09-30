@@ -202,19 +202,24 @@ def ingest(req: IngestRequest) -> IngestResponse:
 
     # Urls validation
     if not req.urls:
-        logger.error("Empty request received - no URLs provided")
         raise HTTPException(status_code=400, detail="Please, send at least one URL...")
 
     # Ingestion
-    index_name = INDEX_NAME
-    results = ingest_urls_to_weaviate([str(u) for u in req.urls], index_name=index_name)
+    raw_results = ingest_urls_to_weaviate(
+        urls=[str(u) for u in req.urls],
+        index_name=INDEX_NAME,
+        openai_api_key=OPENAI_API_KEY,
+        embeddings_model=EMBEDDINGS_MODEL,
+    )
+
+    # Results
+    results = [IngestResult(**r) for r in raw_results]
     total_chunks = sum(r.chunks for r in results if r.ok)
 
-    logger.info(f"Ingestion completed. Index: {index_name}, Total chunks: {total_chunks}")
-    return IngestResponse(collection=index_name, results=results, total_chunks=total_chunks)
+    return IngestResponse(collection=INDEX_NAME, results=results, total_chunks=total_chunks)
 ```
 
-2. Loop execution for data fetching and processing, each url at a time, always using Langchain components:
+2. Loop execution for data fetching and processing, each url at a time, always using Langchain components, implemented in `utils/ingest_data_utils.py`:
     - *WebBaseLoader* is used to fetch the data from the url
     - *RecursiveCharacterTextSplitter* is used to split the data into chunks
     - *OpenAIEmbeddings* is used to generate embeddings for the data
@@ -223,26 +228,24 @@ def ingest(req: IngestRequest) -> IngestResponse:
 ```python
 ...
         for url in urls:
-            # Fetches the html content of the url
+            # Fetch HTML
             logger.debug(f"Processing URL: {url}")
             status, html, meta = fetch_html(url)
 ...
+            # Load documents
             try:
-                # Loads the html content of the url into documents
-                logger.debug(f"Loading documents from {url} using WebBaseLoader")
                 docs = WebBaseLoader(url).load()
+                logger.info(f"Loaded {len(docs)} documents from {url}")
 ...
-            # Splits the documents into chunks
+            # Split documents and add metadata
             for d in docs:
                 d.metadata = {**(d.metadata or {}), "source": url}
             splits = splitter.split_documents(docs)
-            logger.info(f"Split {url} into {len(splits)} chunks")
 ...
-            # Adds the chunks to the vector store
+            # Add docments to vectorstore
             texts = [doc.page_content for doc in splits]
             metadatas = [doc.metadata for doc in splits]
             vectorstore.add_texts(texts=texts, metadatas=metadatas)
-            logger.info(f"Ingestion successful for {url} with {len(splits)} chunks")
 ```
 
 3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in `tools/knowledge_agent/retriever_tool.py`:
