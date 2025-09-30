@@ -104,7 +104,7 @@ def generate_worker_graph(
     # Dynamic tools set and system prompt assignment based on agent type
     if agent_name == "knowledge_agent":
         tools = knowledge_agent_tools
-        instructions = knowledge_agent_prompt
+        instructions = current_date + "\n\n" + knowledge_agent_prompt
     elif agent_name == "customer_service_agent":
         tools = customer_service_agent_tools
         instructions = current_date + "\n\n" + customer_service_agent_prompt
