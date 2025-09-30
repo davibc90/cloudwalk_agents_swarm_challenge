@@ -19,7 +19,7 @@ This application orchestrates several specialized AI agents to handle routing, k
 
 ## Project Overview
 
-This repository implements an **Agent Swarm**—a coordinated set of AI agents that collaborate to process incoming user messages and fulfill a variety of tasks:
+This repository implements an **Agents Swarm**—a coordinated set of AI agents that collaborate to process incoming user messages and fulfill a variety of tasks:
 
 1. **Supervisor (Router) Agent**  
    - Entry point for all messages; routes requests to the appropriate agent or finish the agents work
@@ -284,7 +284,7 @@ def initialize_retriever_for_rag():
 ---
 
 - **Human Intervention** 
-    - Every single call to the secretary agent's add_appointment tool requires human intervention. 
+    - Every single call to the add_appointment tool (secretary agent) requires human intervention. 
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
     - Inside the add_appointment tool, there is a call to the interrupt function.
@@ -333,7 +333,7 @@ def initialize_retriever_for_rag():
 
 ## Testing 
 
-**Once all services are running, it is possible to test the agents swarm by using the commands inside `powershell_comands.txt`, in the root directory of this repository**
+**Once all services are running, it is possible to test the agents swarm by using the commands inside `windows_cmd_commands.txt`, in the root directory of this repository**
 
 **The following unit and integration tests have been performed so far:**
 
@@ -355,9 +355,6 @@ def initialize_retriever_for_rag():
 **Human Intervention Test**
 - Consists in responding to a human intervention interruption> In this case, every time the add_appointment tool is called
 
-**Persistence and Checkpointing Test**
-- Consists in testing the persistence of the conversation history and the checkpointer functionality
-
 **Summarization Test**
 - Consists in testing the summarization functionality, observing the conversation history and the summary after a certain number of messages. The old chat history should be deleted after the summarization process and the summary should be added to the conversation history, preserving the conversation context and keeping the very last messages (default last 4 messages).
 
@@ -370,7 +367,7 @@ def initialize_retriever_for_rag():
 ---
 
 ## Supabase 
-- Project Web User Interface URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
+- Web User Interface URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
 - Tables:
   - **appointments**: appointments records, queried and registered by secretary agent
   - **user_info**: user info records, retrieved by customer service agent, before any other action
@@ -385,6 +382,7 @@ def initialize_retriever_for_rag():
 ---
 
 ## Other LLM Tools
+
 1. **WindSurf**: IDE used for coding with strong auto-completion feature
 2. **Cline**: integrated to WindSurf, it is a software development assistant 
 3. **ChatGPT**
@@ -396,6 +394,7 @@ A big set of tasks were accomplished using the tools above, such as:
   - General Optimization
   - Debugging and Error Correction
   - Docstrings generation
+  - Prompt refinement
   - Suggestion design patterns and best practices
   - Suggestion of unit and integration tests
   - Log analysis to identify failures
