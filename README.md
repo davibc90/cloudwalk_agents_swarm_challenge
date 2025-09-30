@@ -337,6 +337,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -H "Content-Type: application/json" `
   -d '{"message":"Could it be next friday at noon?","user":"client789"}'
 ```
+- In order to evaluate if the blocked time slots are being properly blocked, repeat the same request in this section. In the second request, the time slot will not be available.
 
 ---
 
