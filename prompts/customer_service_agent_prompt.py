@@ -5,7 +5,7 @@ customer_service_agent_prompt = """<role>
 
 <user_info>
 - retrieve_user_info tool: Retrieves user information from the database
-- Must be done before any other action in order to obtain general user data for problem analysis
+- Must be done before any other action if the user reports any issue
 </user_info>
 
 <new_support_call>
