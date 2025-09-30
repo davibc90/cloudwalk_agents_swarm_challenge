@@ -120,6 +120,7 @@ services:
 ## Building & Running
 
 Navigate to the root directory and run the following command to build and download images and start all services:
+`IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS`
 
 ```bash
 docker-compose up -d
