@@ -10,12 +10,12 @@ tavily_api_key = os.getenv("TAVILY_SEARCH_API_KEY")
 tavily = TavilyClient(api_key=tavily_api_key)
 
 @tool
-def web_search_tool(query: str, max_results: int = 10) -> List[Dict[str, Any]]:
+def web_search_tool(query: str, max_results: int = 15) -> List[Dict[str, Any]]:
     """
     Web search tool using Tavily Search API
     Args:
         query: search query
-        max_results: number of results should be returned (minimum: 10, maximum: 20)
+        max_results: number of results should be returned (minimum: 15, maximum: 30)
     Returns:
         List of dicts with {title, url, content}
     """

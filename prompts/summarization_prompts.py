@@ -1,5 +1,5 @@
 none_summary_prompt = """Generate a summary of the conversation until the present moment.
-Conserve entities from the text (values, dates, names, products, etc.).
+Always conserve entities from the text (values, dates, names, products, etc.) in the summary.
 Be concise and objective"""
 
 def existing_summary_prompt(summary: str):
