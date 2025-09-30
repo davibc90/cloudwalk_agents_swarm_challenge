@@ -510,3 +510,20 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 - Email: davibc.16@gmail.com  ----> pay attention to the dot after 'c'
 - Password: CloudWalk@2025
 ```
+
+---
+
+## Other LLM Tools
+- WindSurf: IDE used for coding with strong auto-completion feature
+- Cline: integrated to WindSurf, it is a software development assistant 
+- ChatGPT
+
+A big set of tasks were accomplished using the tools above, such as:
+  - Building algorithms sketches and problem-solving strategies 
+  - Code Modularization and Refactoring
+  - General Optimization
+  - Debugging and Error Correction
+  - Docstrings generation
+  - Suggestion design patterns and best practices
+  - Suggestion of unit and integration tests
+  - Log analysis to identify failures
