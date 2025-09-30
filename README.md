@@ -5,20 +5,6 @@ This application orchestrates several specialized AI agents to handle routing, k
 
 ---
 
-## Table of Contents
- 
-- [Frameworks & Libraries](#frameworks--libraries) 
-- [Project Overview](#project-overview)  
-- [Directory Structure](#directory-structure)  
-- [Graph Flow and Architecture](#graph-flow-and-architecture)  
-- [Configuration](#configuration)  
-- [Building & Running](#building--running)  
-- [API Endpoints](#api-endpoints)  
-- [Bonus Features](#bonus-features)  
-- [Testing & Debugging](#testing--debugging)  
-
----
-
 ## Frameworks & Libraries
 
 - **FastAPI** – HTTP server and routing  
@@ -100,13 +86,11 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 - Used to generate summaries of the conversation, preventting the messages list of the chat history from growing too large. 
 - The necessity for summarization is checked at runtime, always before calling the supervisor agent to analyze the user's input
 
-2nd node - `Supervisor agent` (`graphs/general_agent_subgraph.py`) 
-- Analyzes the user's input and routes requests to one or more agents in order to fulfill the user's request. 
+2nd node - `Supervisor` (`graphs/general_agent_subgraph.py`) 
 - Agents communicate via direct tool calls always within a central workflow graph (`graphs/main_graph.py`).  
 - Must await the response of the last transfered agent before transferring control to another agent or calling the personality node.
 
-Agent Nodes - `Agents subgraphs` (`graphs/general_agent_subgraph.py`) 
-- Each agent is a specialized with its own tools set and capabilities. 
+Agent Nodes - `Agents` (`graphs/general_agent_subgraph.py`) 
 - Each agent subgraph is generated in the `graphs/general_agent_subgraph.py` file and composes the main graph as nodes.
 - Mandatory to send back a response to the supervisor agent.
 
