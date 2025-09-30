@@ -246,14 +246,10 @@ curl -X POST http://127.0.0.1:10000/invoke `
             if not human_intervention_response:
             # Regular message flow
             output = compiled_graph.invoke({"messages": [input_message]}, config)
-            messages_list = output["messages"]
-            last_message = messages_list[-1]
         ...
             else:
             # Human intervention response
             output = compiled_graph.invoke(Command(resume={"type": f"{user_message}"}), config)
-            messages_list = output["messages"]
-            last_message = messages_list[-1]
         ...
 ```
 
