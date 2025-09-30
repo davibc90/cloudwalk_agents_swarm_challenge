@@ -402,7 +402,8 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 ---
 
 ## Supabase Credentials
-- Project URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
+- Project UI URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
+- Manage and checking data stored
 ```text
 - Email: davibc.16@gmail.com
 - Password: CloudWalk@2025
