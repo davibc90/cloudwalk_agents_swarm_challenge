@@ -52,7 +52,7 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
 ├── requirements.txt
 ├── routes/      -> invoking agents swarm and data ingestion routes
 ├── config/      -> configuration files for supabase e weaviate vector database clients
-├── graphs/      -> main graph, agents subgraphs and other components, such as summarization node and personality node
+├── graphs/      -> main graph, agents subgraphs, summarization and personality nodes
 ├── prompts/     -> prompts for each agent
 ├── tools/       -> tools for each agent
 ├── utils/       -> utils functions for a variety of purposes
