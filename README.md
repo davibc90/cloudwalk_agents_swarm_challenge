@@ -195,6 +195,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
 
 1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section
 ```python
+...
 @router.post("/ingest_url_content", response_model=IngestResponse)
 def ingest(req: IngestRequest) -> IngestResponse:
     logger.info(f"Received ingestion request with {len(req.urls)} URLs")
@@ -218,6 +219,31 @@ def ingest(req: IngestRequest) -> IngestResponse:
     - *RecursiveCharacterTextSplitter* is used to split the data into chunks
     - *OpenAIEmbeddings* is used to generate embeddings for the data
     - *WeaviateVectorStore* interface is used to store the data in the vector db
+
+```python
+...
+        for url in urls:
+            # Fetches the html content of the url
+            logger.debug(f"Processing URL: {url}")
+            status, html, meta = fetch_html(url)
+...
+            try:
+                # Loads the html content of the url into documents
+                logger.debug(f"Loading documents from {url} using WebBaseLoader")
+                docs = WebBaseLoader(url).load()
+...
+            # Splits the documents into chunks
+            for d in docs:
+                d.metadata = {**(d.metadata or {}), "source": url}
+            splits = splitter.split_documents(docs)
+            logger.info(f"Split {url} into {len(splits)} chunks")
+...
+            # Adds the chunks to the vector store
+            texts = [doc.page_content for doc in splits]
+            metadatas = [doc.metadata for doc in splits]
+            vectorstore.add_texts(texts=texts, metadatas=metadatas)
+            logger.info(f"Ingestion successful for {url} with {len(splits)} chunks")
+```
 
 3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in `tools/knowledge_agent/retriever_tool.py`:
 ```python
