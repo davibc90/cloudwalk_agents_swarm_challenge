@@ -193,7 +193,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
 
 ## RAG Pipeline Description
 
-1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section
+1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section, shown bellow:
 ```python
 ...
 @router.post("/ingest_url_content", response_model=IngestResponse)
@@ -248,7 +248,7 @@ def ingest(req: IngestRequest) -> IngestResponse:
             vectorstore.add_texts(texts=texts, metadatas=metadatas)
 ```
 
-3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in `tools/knowledge_agent/retriever_tool.py`:
+3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in, implemented in `tools/knowledge_agent/retriever_tool.py`:
 ```python
 ...
 def initialize_retriever_for_rag():
@@ -366,6 +366,8 @@ def initialize_retriever_for_rag():
 ---
 
 ## Testing 
+
+All commands are built to be run in the Windows PowerShell.
 
 **Knowledge Agent**
 - Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
