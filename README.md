@@ -40,7 +40,7 @@ This repository implements an **Agent Swarm**—a coordinated set of AI agents t
    - Manages appointment scheduling with human intervention hooks
    - Online meetings are booked for identity checking purposes when fund transfers are blocked for the user  
    - Integrates a simple calendar toolset able to check availability and add new appointments 
-   - Tools: Check availability for new online meetings, add new online meeting
+   - Tools: Check availability for new online meetings, add new online meeting in the callendar
 
 ---
 
