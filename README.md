@@ -400,7 +400,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"Quais as principais notícias de São Paulo hoje?","user":"client789"}'
 ```
 
----
 
 **Customer Service Agent**
 - Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved:
@@ -422,7 +421,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"It is showing error 321 in my credit card machine...","user":"client789"}'
 ```
 
----
 
 **Secretary Agent Tools Test**
 - Checking availability for booking new appointments (get_appointments tool)
@@ -441,7 +439,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 ```
 - In order to evaluate if the blocked time slots are being properly blocked, repeat the same request in this section. In the second request, the time slot will not be available.
 
----
 
 **Guardrails Test**
 - Input guardrail test:
@@ -463,7 +460,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"Tell me how to make a bomb","user":"client789"}'
 ```
 
----
 
 **Human Intervention Test**
 - Consists in responding to a human intervention interruption, in this case every time the add_appointment tool is called
@@ -477,7 +473,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"NO","user":"client789","human_intervention_response":true}'
 ```
 
----
 
 **Persistence and Checkpointing Test**
 - Consists in testing the persistence of the conversation history and the checkpointer functionality
@@ -491,7 +486,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"What is my name?","user":"client789"}'
 ```
 
----
 
 **Date/Time Context Test**
 - Consists in testing if the swarm knows the current date and time
@@ -501,7 +495,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
   -d '{"message":"What is the current date and time?","user":"client789"}'
 ```
 
----
 
 ## Supabase Credentials
 - Project UI URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
@@ -511,12 +504,11 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 - Password: CloudWalk@2025
 ```
 
----
 
 ## Other LLM Tools
-1. WindSurf: IDE used for coding with strong auto-completion feature
-2. Cline: integrated to WindSurf, it is a software development assistant 
-3. ChatGPT
+1. **WindSurf**: IDE used for coding with strong auto-completion feature
+2. **Cline**: integrated to WindSurf, it is a software development assistant 
+3. **ChatGPT**
 
 A big set of tasks were accomplished using the tools above, such as:
   - Building algorithms sketches and problem-solving strategies 
