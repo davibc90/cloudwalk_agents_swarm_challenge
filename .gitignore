@@ -2,9 +2,6 @@
 venv/
 .env
 
-# Test Scenarios
-utils/test_scenarios.txt
-
 # Dependencies
 __pycache__/
 *.pyc
