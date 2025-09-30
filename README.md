@@ -134,6 +134,8 @@ docker-compose up -d
 
 ## API Endpoints and Execution Steps
 
+`Windows PowerShell command for data ingestion and invoking swarm in powershell_comands.txt`
+
 ### STEP 1: **Ingest URL Data**  
    `/routes/ingest_data_route.py`  
    - Ingests data from a given set of URLs, must be done before invoking the swarm
@@ -152,7 +154,7 @@ docker-compose up -d
     "user_id": "client789"
 }
 ```
-   - Windows PowerShell command for data ingestion and invoking swarm in `powershell_comands.txt`
+
 
 ---
 
@@ -332,28 +334,33 @@ def initialize_retriever_for_rag():
 
 ## Testing 
 
-All commands are inside `powershell_comands.txt`, in the root directory of this repository.
+- Once all services are running, it is possible to test the agents swarm by using the commands inside `powershell_comands.txt`, in the root directory of this repository
+
+- The following unit and integration tests have been performed:
 
 **Knowledge Agent**
 - Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
-- Web Search Tool test, asking for news and events, always after confirming the information is not inside the knowledge base:
+- Web Search Tool test, asking for news and events, always after confirming the information is not inside the knowledge base
 
 **Customer Service Agent**
-- Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved:
-- New Support Call Tool test, in order to evaluate if the agent registers a new support call when the situation is covered in the set of issues which describes when it should be done:
+- Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved
+- New Support Call Tool test, in order to evaluate if the agent registers a new support call when the situation is covered in the set of issues which describes when it should be done
 
 **Secretary Agent Tools Test**
 - Checking availability before booking an online appointment with a customer success speacialist
-- In order to evaluate if the blocked time slots are being properly retrieved, repeat the same test, after emptying the the Docker volume for the agents swarm specific container. In the second test, the time slot will not be available.
+- In order to evaluate if the blocked time slots are being properly retrieved, repeat the same test, after emptying the the Docker volume for the agents swarm specific container. In the second test, the time slot will not be available
 
 **Guardrails Test**
 - Guardrails test, performed using inputs that certainly should be blocked by the moderations API
 
 **Human Intervention Test**
-- Consists in responding to a human intervention interruption, in this case every time the add_appointment tool is called
+- Consists in responding to a human intervention interruption> In this case, every time the add_appointment tool is called
 
 **Persistence and Checkpointing Test**
 - Consists in testing the persistence of the conversation history and the checkpointer functionality
+
+**Summarization Test**
+- Consists in testing the summarization functionality, observing the conversation history and the summary after a certain number of messages. The old chat history should be deleted after the summarization process and the summary should be added to the conversation history, preserving the conversation context and keeping the very last messages (default last 4 messages).
 
 **Date/Time Context Test**
 - Consists in testing if the swarm knows the current date and time
