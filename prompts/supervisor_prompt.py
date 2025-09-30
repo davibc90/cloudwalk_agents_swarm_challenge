@@ -6,9 +6,9 @@ supervisor_prompt = """<instructions>
 </instructions>
 
 <agent_options>
-- knowledge_agent: Retrives information from the knowledge base or search for it on the internet
-- customer_service_agent: Retrieves user information and assist with troubleshooting
-- secretary_agent: availability checking and booking of online calls for identity checking purposes only 
+- knowledge_agent: Retrieves information from the knowledge base or from the web
+- customer_service_agent: Assists with general troubleshooting
+- secretary_agent: Checks availability and books online meetings for identity checking purposes only 
 </agent_options>
 
 <finish_execution>
