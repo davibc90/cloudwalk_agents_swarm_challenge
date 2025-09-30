@@ -134,7 +134,7 @@ docker-compose up -d
 
 ## API Endpoints and Execution Steps
 
-`Windows PowerShell command for data ingestion and invoking swarm in powershell_comands.txt`
+`***Windows PowerShell command for data ingestion and invoking swarm in powershell_comands.txt***`
 
 ### STEP 1: **Ingest URL Data**  
    `/routes/ingest_data_route.py`  
