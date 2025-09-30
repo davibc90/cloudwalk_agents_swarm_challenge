@@ -193,7 +193,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
     - Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
 
 - **Guardrails** for input/output parsing  
-    - GuardRails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
+    - Guardrails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
     - The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
         analyzing both the input and output messages, evaluating them against a set of categories, including: hate speech, sexual content, violence, harassment, etc.
 
@@ -212,23 +212,6 @@ curl -X POST http://127.0.0.1:10000/invoke `
         except ModerationError as me:
             logger.warning("Input blocked by moderation: %s", me)
             raise HTTPException(status_code=400, detail=str(me))
-
-        ...
-        # =========================
-        # Output guardrail 
-        # =========================
-        try:
-            response_text = str(response['ai_response'])  
-            mod_result_out = assert_safe_input_or_raise(response_text, user_id="system")
-            logger.info(
-                "Output approved | flagged=%s | categories_true=%s",
-                mod_result_out.flagged,
-                _cats_true(mod_result_out),
-            )
-        except ModerationError as me:
-            logger.warning("Output blocked by moderation: %s", me)
-            raise HTTPException(status_code=500, detail="Agent response blocked by moderation!")
-
 ```
 
 ---
