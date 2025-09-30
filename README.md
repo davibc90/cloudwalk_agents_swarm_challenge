@@ -214,10 +214,10 @@ def ingest(req: IngestRequest) -> IngestResponse:
 ```
 
 2. Loop execution for data fetching and processing, each url at a time, always using Langchain components:
-    - WebBaseLoader is used to fetch the data from the url
-    - RecursiveCharacterTextSplitter is used to split the data into chunks
-    - OpenAIEmbeddings is used to generate embeddings for the data
-    - WeaviateVectorStore interface is used to store the data in the vector db
+    - *WebBaseLoader* is used to fetch the data from the url
+    - *RecursiveCharacterTextSplitter* is used to split the data into chunks
+    - *OpenAIEmbeddings* is used to generate embeddings for the data
+    - *WeaviateVectorStore* interface is used to store the data in the vector db
 
 3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in `tools/knowledge_agent/retriever_tool.py`:
 ```python
