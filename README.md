@@ -9,10 +9,10 @@ This application orchestrates several specialized AI agents to handle routing, k
 
 - **FastAPI** – HTTP server and routing  
 - **Docker & Docker Compose** – Containerization  
-- **LangChain / LangGraph** – Agent orchestration 
+- **LangChain / LangGraph** – Agents orchestration 
 - **Supabase** – User data, support calls, and appointment scheduling storage
 - **Weaviate** – Vector database for RAG queries and document storage  
-- **OpenAI API** – LLM back end & Moderation (GuardRails)  
+- **OpenAI API** – LLM back end & Moderation (Guardrails)  
 - Others: see [requirements.txt](requirements.txt)
 
 ---
@@ -102,25 +102,28 @@ Last node - `Personality node` (`graphs/other_components/personality_node.py`)
 
 ## Configuration
 
-Edit environment variables in the `docker-compose.yaml` or provide a `.env` file:
+- Edit environment variables in the `docker-compose.yaml` file
+- The most sensitive variables are related to external services and are displayed bellow:
 
 ```yaml
-services:
-  app:
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - WEAVIATE_URL=${WEAVIATE_URL}
-      - WEAVIATE_KEY=${WEAVIATE_KEY}
-```
+      # --- Supabase ---
+      SUPABASE_URL: "https://qmcdadefjwjxjylslljt.supabase.co"
+      SUPABASE_SERVICE_ROLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtY2RhZGVmandqeGp5bHNsbGp0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTM3NDU0NywiZXhwIjoyMDQwOTUwNTQ3fQ.uSeiiInAsSlzjQiZuwOgdqaZDshMSaSkzFGHPezzDN4"
 
+       # --- Web_Search_Tool ---
+      TAVILY_SEARCH_API_KEY: "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"
+
+      # --- LLM / OpenAI ---
+      OPENAI_API_KEY: "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"
+```
+`IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS IF WANTED`
+- The other variables are majorly related to the application's runtime configurations, such as business rules, LLM parameters, etc
 ---
 
 ## Building & Running
 
 Navigate to the root directory and run the following command to build and download images and start all services:
-`IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS`
 
 ```bash
 docker-compose up -d
