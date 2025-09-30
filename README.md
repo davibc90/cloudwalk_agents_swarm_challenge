@@ -405,6 +405,6 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 - Project UI URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
 - Manage and checking data stored
 ```text
-- Email: davibc.16@gmail.com #pay attention to the dot after 'c'
+- Email: davibc.16@gmail.com  ----> pay attention to the dot after 'c'
 - Password: CloudWalk@2025
 ```
