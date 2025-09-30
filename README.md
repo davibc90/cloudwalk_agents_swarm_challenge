@@ -423,7 +423,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 
 
 **Secretary Agent Tools Test**
-- Checking availability for booking new appointments (get_appointments tool)
+- Checking availability before booking an online appointment with a customer success speacialist
 ```powershell
 # first moment, it will be routed to customer service agent
 # After retrieving user info, it will be routed to secretary agent
@@ -496,6 +496,12 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 ```
 
 
+**Further Tests**
+- Trace and analyze inputs and outputs of the graph in many different scenarios using evaluating solutions, such as LangSmith Studio
+
+
+---
+
 ## Supabase Credentials
 - Project UI URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
 - Manage and checking data stored
@@ -504,6 +510,7 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 - Password: CloudWalk@2025
 ```
 
+---
 
 ## Other LLM Tools
 1. **WindSurf**: IDE used for coding with strong auto-completion feature
