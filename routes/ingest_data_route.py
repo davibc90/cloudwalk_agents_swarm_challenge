@@ -122,6 +122,7 @@ def ingest_urls_to_weaviate(urls: List[str], index_name: str) -> List[IngestResu
 
         results: List[IngestResult] = []
         for url in urls:
+            # Fetches the html content of the url
             logger.debug(f"Processing URL: {url}")
             status, html, meta = fetch_html(url)
             if not html:
@@ -130,6 +131,7 @@ def ingest_urls_to_weaviate(urls: List[str], index_name: str) -> List[IngestResu
                 continue
 
             try:
+                # Loads the html content of the url into documents
                 logger.debug(f"Loading documents from {url} using WebBaseLoader")
                 docs = WebBaseLoader(url).load()
                 logger.info(f"Loaded {len(docs)} documents from {url}")
@@ -138,9 +140,9 @@ def ingest_urls_to_weaviate(urls: List[str], index_name: str) -> List[IngestResu
                 results.append(IngestResult(url=url, ok=False, chunks=0, error=f"WebBaseLoader error: {e!r}"))
                 continue
 
+            # Splits the documents into chunks
             for d in docs:
                 d.metadata = {**(d.metadata or {}), "source": url}
-
             splits = splitter.split_documents(docs)
             logger.info(f"Split {url} into {len(splits)} chunks")
 
@@ -149,10 +151,9 @@ def ingest_urls_to_weaviate(urls: List[str], index_name: str) -> List[IngestResu
                 results.append(IngestResult(url=url, ok=False, chunks=0, error="Splitter empty"))
                 continue
 
+            # Adds the chunks to the vector store
             texts = [doc.page_content for doc in splits]
             metadatas = [doc.metadata for doc in splits]
-
-            logger.debug(f"Adding {len(texts)} chunks from {url} into Weaviate")
             vectorstore.add_texts(texts=texts, metadatas=metadatas)
             logger.info(f"Ingestion successful for {url} with {len(splits)} chunks")
 
@@ -164,17 +165,21 @@ def ingest_urls_to_weaviate(urls: List[str], index_name: str) -> List[IngestResu
         logger.debug("Closing Weaviate client connection")
         weaviate_client.close()
 
-# ------------ Rota ------------
+# ------------ Route ------------
 
 @router.post("/ingest_url_content", response_model=IngestResponse)
 def ingest(req: IngestRequest) -> IngestResponse:
     logger.info(f"Received ingestion request with {len(req.urls)} URLs")
+
+    # Urls validation
     if not req.urls:
         logger.error("Empty request received - no URLs provided")
         raise HTTPException(status_code=400, detail="Please, send at least one URL...")
 
+    # Ingestion
     index_name = INDEX_NAME
     results = ingest_urls_to_weaviate([str(u) for u in req.urls], index_name=index_name)
     total_chunks = sum(r.chunks for r in results if r.ok)
+
     logger.info(f"Ingestion completed. Index: {index_name}, Total chunks: {total_chunks}")
     return IngestResponse(collection=index_name, results=results, total_chunks=total_chunks)
