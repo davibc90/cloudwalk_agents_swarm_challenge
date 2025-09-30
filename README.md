@@ -248,7 +248,7 @@ def ingest(req: IngestRequest) -> IngestResponse:
             vectorstore.add_texts(texts=texts, metadatas=metadatas)
 ```
 
-3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool in, implemented in `tools/knowledge_agent/retriever_tool.py`:
+3. Retrieval querys are performed using the WeaviateVectorStore interface as retriever tool, implemented in `tools/knowledge_agent/retriever_tool.py`:
 ```python
 ...
 def initialize_retriever_for_rag():
@@ -502,9 +502,14 @@ curl -X POST "http://localhost:10000/langgraph/invoke" `
 
 ---
 
-## Supabase Credentials
-- Project UI URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
-- Manage and checking data stored
+## Supabase 
+- Project Graphical Interface URL: https://supabase.com/dashboard/project/qmcdadefjwjxjylslljt
+- Tables:
+  - **appointments**: appointments records, queried and registered by secretary agent
+  - **user_info**: user info records, retrieved by customer service agent, before any other action
+  - **support_calls**: support calls registered by customer service agent, in the restricted cases described in the prompt
+
+- Credentials
 ```text
 - Email: davibc.16@gmail.com  ----> pay attention to the dot after 'c'
 - Password: CloudWalk@2025
