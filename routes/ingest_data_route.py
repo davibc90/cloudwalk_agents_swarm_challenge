@@ -1,4 +1,3 @@
-# routers/ingest.py (ou o arquivo da sua rota atual)
 from typing import List
 from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel, HttpUrl
@@ -39,6 +38,26 @@ class IngestResponse(BaseModel):
 
 @router.post("/ingest_url_content", response_model=IngestResponse)
 def ingest(req: IngestRequest) -> IngestResponse:
+
+    """
+    Ingests the content of one or more URLs into a Weaviate collection using OpenAI embeddings.
+
+    This endpoint validates the provided URLs, extracts their content, and stores the
+    chunked data in the configured Weaviate index. Each ingestion result includes
+    the URL, ingestion status, number of chunks processed, and any errors encountered.
+
+    Args:
+        req (IngestRequest): A request body containing a list of valid URLs to ingest.
+
+    Returns:
+        IngestResponse: A response containing the collection name, ingestion results
+        for each URL, and the total number of chunks successfully processed.
+
+    Raises:
+        HTTPException: If no URLs are provided in the request.
+        ValueError: If the required `OPENAI_API_KEY` environment variable is not set.
+    """
+    
     logger.info(f"Received ingestion request with {len(req.urls)} URLs")
 
     # Urls validation
