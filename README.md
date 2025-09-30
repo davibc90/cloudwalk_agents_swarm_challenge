@@ -230,7 +230,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
     )
 ```
 
-* In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention_response" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
+    - In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention_response" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
 ```python
         # Request schema
         class QueryRequest(BaseModel):
@@ -240,7 +240,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
 
 ```
 
-* Inside the `main_graph.py` file, in the very end of the code, there are two different invoking patterns:
+    - Inside the `main_graph.py` file, in the very end of the code, there are two different invoking patterns:
 ```python
         ...
             if not human_intervention_response:
@@ -257,7 +257,7 @@ curl -X POST http://127.0.0.1:10000/invoke `
         ...
 ```
 
-* Request body for human intervention response:
+    - Request body for human intervention response:
 ```json
      {
        "message": "requested response by human intervention goes here",
