@@ -22,7 +22,7 @@ This application orchestrates several specialized AI agents to handle routing, k
 This repository implements an **Agent Swarm**—a coordinated set of AI agents that collaborate to process incoming user messages and fulfill a variety of tasks:
 
 1. **Supervisor (Router) Agent**  
-   - Entry point for all messages; routes requests to the appropriate sub-agent or finish the agents work
+   - Entry point for all messages; routes requests to the appropriate agent or finish the agents work
    - Calls "personality_node" in order to generate a final response
 
 2. **Knowledge Agent**  
