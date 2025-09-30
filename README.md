@@ -117,13 +117,14 @@ Last node - `Personality node` (`graphs/other_components/personality_node.py`)
       # --- LLM / OpenAI ---
       OPENAI_API_KEY: "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"
 ```
-`IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS IF WANTED`
+
 - The other variables are majorly related to the application's runtime configurations, such as business rules, LLM parameters, etc
 ---
 
 ## Building & Running
 
 Navigate to the root directory and run the following command to build and download images and start all services:
+`IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS IF WANTED`
 
 ```bash
 docker-compose up -d
