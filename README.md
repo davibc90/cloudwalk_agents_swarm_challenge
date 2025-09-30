@@ -262,3 +262,49 @@ curl -X POST http://127.0.0.1:10000/invoke `
      }
 ```
 
+---
+
+## Testing 
+
+**Rag Test - Knowledge Agent**
+- Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
+```powershell
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"What are the fees of the Maquininha Smart","user":"client789"}'
+
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"What is the cost of the Maquininha Smart?","user":"client789"}'
+
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"What are the rates for debit and credit card transactions?","user":"client789"}'
+
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"How can I use my phone as a card machine?","user":"client789"}'
+```
+
+- Web search tool test, asking for news and events:
+```powershell
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"Quando foi o último jogo do Palmeiras?","user":"client789"}'
+
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"Quais as principais notícias de São Paulo hoje?","user":"client789"}'
+```
+
+**Persistence and Checkpointer Test**
+- Consists in testing the persistence of the conversation history and the checkpointer functionality
+```powershell
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"My name is Davi Carneiro.","user":"client789"}'
+
+curl -X POST "http://localhost:10000/langgraph/invoke" `
+  -H "Content-Type: application/json" `
+  -d '{"message":"What is my name?","user":"client789"}'
+```
