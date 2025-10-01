@@ -133,10 +133,10 @@ docker-compose up -d
 
 ## API Endpoints and Execution Steps
 
-`WINDOWS POWERSHELL COMMANDS FOR DATA INGESTION AND SWARM INVOKING ARE INSIDE windows_cmd_commands.txt`
+`WINDOWS CMD COMMANDS FOR DATA INGESTION AND SWARM INVOKING ARE INSIDE windows_cmd_commands.txt`
 
 ### STEP 1: **Ingest URL Data**  
-   `/routes/ingest_data_route.py`  
+   `api/routes/ingest_data_route.py`  
    - Ingests data from a given set of URLs, must be done before invoking the swarm
    - Request body:
 ```json
@@ -145,7 +145,7 @@ docker-compose up -d
 }
 ```
 ### STEP 2: **Invoke Swarm**  
-   `/routes/invoke_route.py`  
+   `api/routes/invoke_route.py`  
    - Request body for regular message flow:
 ```json
 {
@@ -158,7 +158,7 @@ docker-compose up -d
 
 ## RAG Pipeline Description
 
-1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section (`routes/ingest_data_route.py`), shown bellow:
+1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section (`api/routes/ingest_data_route.py`), shown bellow:
 
 ```python 
 ...
