@@ -1,5 +1,5 @@
 
-WINDOWS CMD commands (NOT PowerShell's)
+WINDOWS CMD COMMANDS (NOT PowerShell's)
 
 ==============================
 DATA INGESTION COMMAND
@@ -48,14 +48,6 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
   -d "{\"message\":\"I can't sign in to my account.\",\"user\":\"client789\"}"
 
-curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"message\":\"Ok... tell me how to do it\",\"user\":\"client789\"}"
-
-curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"message\":\"It did not work...I am not used to technology... is there any way to do it?\",\"user\":\"client789\"}"
-
 # Troubleshooting 2
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
@@ -76,7 +68,7 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"Could it be next friday at noon?\",\"user\":\"client789\"}"
+  -d "{\"message\":\"Could it be next friday at 11 AM?\",\"user\":\"client789\"}"
 
 
 -----------------------------
