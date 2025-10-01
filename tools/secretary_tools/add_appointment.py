@@ -49,7 +49,7 @@ def add_appointment(
     # Human intervention rejection        
     else:
         return (
-            "Human intervention rejected the appointment. "
+            "Human intervention rejected the appointment!"
             "Please, tell the user a customer succes specialist will reach out soon in person."
             "When it happens, both will find the best time to schedule the appointment."
         )
