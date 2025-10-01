@@ -115,7 +115,6 @@ class EnvConfig(BaseSettings):
         parts = str(v).split(",")
         return [p.strip().lower() for p in parts if p.strip()]
 
-
     model_config = SettingsConfigDict(
         env_file=".env",           
         env_file_encoding="utf-8",
