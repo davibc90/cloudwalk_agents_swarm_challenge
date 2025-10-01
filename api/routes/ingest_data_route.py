@@ -27,7 +27,6 @@ def ingest(req: IngestRequest) -> IngestResponse:
 
     Raises:
         HTTPException: If no URL is provided (status code 400).
-        ValueError: If the OPENAI_API_KEY environment variable is not defined.
 
     Returns:
         IngestResponse: Object containing:
