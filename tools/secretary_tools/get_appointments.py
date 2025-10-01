@@ -16,11 +16,11 @@ MAX_BOOK_AHEAD_DAYS = env.max_book_ahead_days
 @tool
 def get_appointments(date_str: Optional[str]) -> str:
     """
-    Checks availability for adding online meetings to calendar on a given date.
+    Checks occupied time slots for a given date.
     Args:
-        date_str (str | None): Date in MM/DD/YYYY format (ou None para hoje).
+        date_str (str): Date in MM/DD/YYYY format
     Returns:
-        str: JSON string com horários ocupados e contexto.
+        str: JSON string with occupied time slots and context
     """
     try:
         # Validates/normalizes the date (returns 00:00 in São Paulo timezone, aware)

@@ -8,7 +8,8 @@ def get_date():
 
         ### Description
         Retrieves the current local time in the **America/Sao_Paulo** timezone,
-        formats it as: **Month, D, YYYY - HH:MM AM/PM** (e.g., September, 30, 2025 - 02:15 PM),
+        formats it as: **Month, D, YYYY - HH:MM AM/PM (GMT±X)** 
+        (e.g., September, 30, 2025 - 02:15 PM GMT-3),
         and wraps the result in a <current_date> tag
     """
     
@@ -21,8 +22,11 @@ def get_date():
     date_time = datetime.now(timezone)
 
     # Format: Month, D, YYYY - HH:MM AM/PM
-    # %B → month in full, %d → day, %Y → year, %I:%M %p → 12h time AM/PM
     current_date = date_time.strftime("%B, %d, %Y - %I:%M %p")
     current_date = current_date.replace(" 0", " ")
 
-    return f"<current_date>\n{current_date}\n</current_date>"
+    # Get the offset from UTC in the format ±HHMM
+    gmt_offset = date_time.strftime("%z")  
+    gmt_formatted = f"GMT{gmt_offset[:3]}"  
+
+    return f"<current_date>\n{current_date} {gmt_formatted}\n</current_date>"

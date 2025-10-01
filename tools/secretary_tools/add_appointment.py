@@ -11,11 +11,13 @@ def add_appointment(
     end_time: datetime,
 ) -> str:
     """
-    Tool used to add a new appointment (online meetings) with identity checking purposes
-        Args:
-            user_id (str): User ID retrieved by customer_service_agent
-            start_time (datetime): Start date and time of the appointment (UTC timezone timestamp format)
-            end_time (datetime): End date and time of the appointment (UTC timezone timestamp format)
+    Tool used to add a new online meeting appointment in the calendar
+    Args:
+        user_id (str): Unique user identifier.
+        start_time (datetime): Appointment start time (UTC).
+        end_time (datetime): Appointment end time (UTC).
+    Returns:
+        str: Success message, error details, or rejection notice.
     """
     
     # Human intervention hook
