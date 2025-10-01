@@ -265,7 +265,7 @@ def initialize_retriever_for_rag():
     - Every time the user has fund transfers blocked, the only way to unlock them is to book an appointment with a costumer success specialist, wich is arrenged by the secretary agent.
 
 - **Guardrails** for input/output parsing  
-    - Guardrails are implemented in `utils/moderation.py` and invoked before/after LLM calls inside `routes/invoke_route.py`.
+    - Guardrails are implemented in `services/moderation.py` and invoked before/after LLM calls inside `api/routes/invoke_route.py`.
     - The OpenAI Moderation API assess the content of the messages to ensure they do not contain inappropriate content,
         analyzing both the input and output messages, evaluating them against a set of categories, including: hate speech, sexual content, violence, harassment, etc.
 
@@ -292,7 +292,7 @@ def initialize_retriever_for_rag():
     - Every single call to the add_appointment tool (secretary agent) requires human intervention. 
     - It iss necessary to approve the appointment before it is created.
     - If not approved, the user will be instructed to await for human contact.
-    - Inside the add_appointment tool, there is a call to the interrupt function.
+    - Inside the add_appointment tool `tools/secretary_agent/add_appointment.py`, there is a trigger to the interrupt function.
 
 ```python
     response = interrupt(  
@@ -302,7 +302,7 @@ def initialize_retriever_for_rag():
     )
 ```
 
-- In ther request schema in the `routes/invoke_route.py` file, there is a field called "human_intervention_response" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
+- In ther request schema in the `api/schemas/invoke_schema.py` file, there is a field called "human_intervention_response" which flags if the current request is a response to address a human intervention interruption or a regular message coming from the user.
 ```python
         # Request schema
         class QueryRequest(BaseModel):
@@ -312,7 +312,7 @@ def initialize_retriever_for_rag():
 
 ```
 
-- Inside the `main_graph.py` file, in the very end of the code, there are two different invoking patterns:
+- Inside the `graphs/main_graph.py` file, in the very end of the code, there are two different invoking patterns:
 ```python
         ...
             if not human_intervention_response:
