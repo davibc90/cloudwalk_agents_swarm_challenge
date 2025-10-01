@@ -342,12 +342,14 @@ def initialize_retriever_for_rag():
 - Web Search Tool test, asking for news and events, always after confirming the information is not inside the knowledge base
 
 **Customer Service Agent**
-- Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved
-- New Support Call Tool test, in order to evaluate if the agent registers a new support call when the situation is covered in the set of issues which describes when it should be done
+- Retrieve User Info Tool test, in order to evaluate if the user's info is being properly retrieved and parsed
+- New Support Call Tool test, in order to evaluate if the agent registers a new support call when the situation requires it
 
 **Secretary Agent Tools Test**
-- Checking availability before booking an online appointment with a customer success speacialist
-- In order to evaluate if the blocked time slots are being properly retrieved, repeat the same test, after emptying the the Docker volume for the agents swarm specific container. In the second test, the time slot will not be available
+- Get Appointments Tool test, in order to evaluate if the agent retrieves the occupied time slots for a given date
+    * Checks if the occupied time slots are being properly retrieved and respected, as well as the context and businees rules
+- Add Appointment Tool test, in order to evaluate if the agent registers a new appointment when the situation requires it
+    * Checks if the appointment is being properly registered and the human intervention is being properly triggered and evaluated
 
 **Guardrails Test**
 - Guardrails test, performed using inputs that certainly should be blocked by the moderations API
