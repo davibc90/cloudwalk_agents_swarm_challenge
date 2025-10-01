@@ -8,5 +8,4 @@ knowledge_agent_prompt = """<instructions>
 4. Always prioritize the knowledge base before searching the web.
 5. Never fabricate or guess information. Only respond with what you have retrieved.
 6. Once you have gathered sufficient information, provide a clear and concise response to the user.
-</instructions>
-"""
+</instructions>"""
