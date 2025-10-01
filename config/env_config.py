@@ -77,7 +77,7 @@ class EnvConfig(BaseSettings):
     # ---------------------------
     booking_starting_time: time = Field(..., validation_alias=AliasChoices("BOOKING_STARTING_TIME"))
     booking_end_time: time = Field(..., validation_alias=AliasChoices("BOOKING_END_TIME"))
-    booking_duration_minutes: int = Field(..., validation_alias=AliasChoices("BOOKINKG_DURATION_MINUTES"))
+    booking_duration_minutes: int = Field(..., validation_alias=AliasChoices("BOOKING_DURATION_MINUTES"))
     booking_step_minutes: int = Field(..., validation_alias=AliasChoices("BOOKING_STEP_MINUTES"))
     available_weekdays: List[str] = Field(..., validation_alias=AliasChoices("AVAILABLE_WEEKDAYS"))
     max_book_ahead_days: int = Field(..., validation_alias=AliasChoices("MAX_BOOK_AHEAD_DAYS"))
