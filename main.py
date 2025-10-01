@@ -24,8 +24,8 @@ from utils.logger_utils import setup_logger
 logger = setup_logger(__name__)
 
 # Import routers
-from routes.invoke_route import router as invoke_team_router
-from routes.ingest_data_route import router as ingest_router
+from api.routes.invoke_route import router as invoke_team_router
+from api.routes.ingest_data_route import router as ingest_router
 
 # Define the lifespan using an asynccontextmanager
 @asynccontextmanager
