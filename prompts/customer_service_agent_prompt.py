@@ -11,7 +11,7 @@ customer_service_agent_prompt ="""<role>
 <retrieve_user_info>
 - Tool: retrieve_user_info
 - Purpose: Fetch user information from the database.
-- When to use: ONLY if the user reports an issue related to their account.
+- When to use: ONLY if the user reports an issue related to their account or its functionalities.
 - Examples: "I can't log in", "My account access is not working".
 </retrieve_user_info>
 
