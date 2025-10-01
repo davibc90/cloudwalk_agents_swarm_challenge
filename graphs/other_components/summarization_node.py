@@ -144,6 +144,7 @@ def summary_node(State, rate_limiter: InMemoryRateLimiter):
         return {
             "summary": new_summary_text,
             "messages": new_messages,
+            "last_active_agent": None
         }
 
     return _node

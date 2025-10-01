@@ -10,13 +10,13 @@ supervisor_prompt = """<instructions>
 </instructions>
 
 <agent_options_and_capabilities>
-- knowledge_agent (all information retrieval): 
+- knowledge_agent: 
     * retrieves information from the knowledge base for answers
-    * search on the web
-- customer_service_agent (troubleshooting): 
-    * queries user data in order to check issues with user's account 
-    * registers a new support call for card machine 
-- secretary_agent (calendar management for identity verification online meetings): 
+    * searches on the web if needed
+- customer_service_agent: 
+    * queries user's data in order to check account issues
+    * registers a new support call for card machine problems
+- secretary_agent: 
     * checks availability for new online meetings
     * registers a new online meeting
 </agent_options>
