@@ -79,6 +79,7 @@ def ingest_urls_to_weaviate(
     weaviate_client = create_weaviate_client()
 
     try:
+        # Create vectorstore interface
         vectorstore = WeaviateVectorStore(
             client=weaviate_client,
             embedding=embeddings,
@@ -121,6 +122,7 @@ def ingest_urls_to_weaviate(
             for d in docs:
                 d.metadata = {**(d.metadata or {}), "source": url}
             splits = splitter.split_documents(docs)
+            logger.info(f"Split {len(docs)} documents into {len(splits)} chunks")
 
             if not splits:
                 results.append({"url": url, "ok": False, "chunks": 0, "error": "Splitter empty"})
