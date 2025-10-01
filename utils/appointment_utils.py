@@ -8,17 +8,16 @@ TZ = pytz.timezone("America/Sao_Paulo")
 
 
 class ValidationError(Exception):
-    """Erro de validação de agendamento."""
+    """Validation error for appointments!"""
     pass
-
 
 def to_iso8601(dt: datetime) -> str:
     """
-    Serializa datetime aware para ISO-8601 (preserva offset).
-    Levanta ValueError se for naive para evitar ambiguidade.
+        Serializes datetime aware to ISO-8601 (preserves offset).
+        Raises ValueError if naive to avoid ambiguity.
     """
     if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
-        raise ValueError("to_iso8601 requer datetime timezone-aware.")
+        raise ValueError("to_iso8601 requires datetime timezone-aware.")
     return dt.isoformat()
 
 
@@ -27,10 +26,10 @@ def _normalize_midnight_sp(dt: datetime) -> datetime:
         Returns the same day at 00:00:00 in São Paulo timezone (aware).
     """
     if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
-        # naive → interpretar como hora local de SP
+        # naive → interpret as local time in SP
         dt = TZ.localize(dt)
     else:
-        # aware → converter para SP
+        # aware → convert to SP
         dt = dt.astimezone(TZ)
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
@@ -57,8 +56,6 @@ def validate_requested_date(date_str: str | None) -> datetime:
     if target_day < today:
         raise ValidationError("Não é permitido consultar horários no passado.")
     if target_day > max_day:
-        raise ValidationError(
-            f"Agendamentos só podem ser feitos até {MAX_BOOK_AHEAD_DAYS} dias no futuro."
-        )
+        raise ValidationError(f"Agendamentos só podem ser feitos até {MAX_BOOK_AHEAD_DAYS} dias no futuro.")
 
     return target_day
