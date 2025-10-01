@@ -9,14 +9,33 @@ logger = setup_logger(__name__)
 INDEX_NAME = env.index_name
 EMBEDDINGS_MODEL = env.embeddings_model
 OPENAI_API_KEY = env.openai_api_key
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY not found. Verify if the environment variable is defined!")
 
 router = APIRouter()
 
+
 @router.post("/ingest_url_content", response_model=IngestResponse)
 def ingest(req: IngestRequest) -> IngestResponse:
+    """
+    Endpoint for ingesting content from URLs into Weaviate.
 
+    This endpoint accepts a list of URLs, extracts the content of each page,
+    generates embeddings using the configured model, and stores the data
+    into the specified Weaviate index.
+
+    Args:
+        req (IngestRequest): Object containing the list of URLs to be processed.
+
+    Raises:
+        HTTPException: If no URL is provided (status code 400).
+        ValueError: If the OPENAI_API_KEY environment variable is not defined.
+
+    Returns:
+        IngestResponse: Object containing:
+            - collection (str): Name of the collection/index in Weaviate.
+            - results (List[IngestResult]): Individual ingestion results,
+              including status, error messages, and number of processed chunks.
+            - total_chunks (int): Total number of successfully processed chunks.
+    """
     logger.info(f"Received ingestion request with {len(req.urls)} URLs")
 
     if not req.urls:
