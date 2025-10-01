@@ -2,7 +2,7 @@ from typing import List
 from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel, HttpUrl
 from utils.logger_utils import setup_logger
-from utils.ingest_data_utils import ingest_urls_to_weaviate
+from services.ingest_data import ingest_urls_to_weaviate
 
 from dotenv import load_dotenv
 import os
