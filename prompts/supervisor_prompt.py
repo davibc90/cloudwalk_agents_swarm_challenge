@@ -9,10 +9,16 @@ supervisor_prompt = """<instructions>
 4. Always respond by transferring the conversation to the selected agent or finishing execution.
 </instructions>
 
-<agent_options>
-- knowledge_agent: Use for general questions, guidance and all information retrieval.
-- customer_service_agent: Use when troubleshooting is required.
-- secretary_agent: Use when online meetings are required for identity verification purposes only. 
+<agent_options_and_capabilities>
+- knowledge_agent (all information retrieval): 
+    * retrieves information from the knowledge base for answers
+    * search on the web
+- customer_service_agent (troubleshooting): 
+    * queries user data in order to check issues with user's account 
+    * registers a new support call for card machine 
+- secretary_agent (calendar management for identity verification online meetings): 
+    * checks availability for new online meetings
+    * registers a new online meeting
 </agent_options>
 
 <finish_execution>

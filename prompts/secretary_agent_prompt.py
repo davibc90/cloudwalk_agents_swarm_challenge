@@ -3,8 +3,8 @@ from config.env_config import env
 # Business rules
 BOOKING_START_TIME = env.booking_starting_time
 BOOKING_END_TIME = env.booking_end_time
-BOOKING_DURATION_MINUTES = (env.booking_duration_minutes)
-MAX_BOOK_AHEAD_DAYS = (env.max_book_ahead_days)
+BOOKING_DURATION_MINUTES = env.booking_duration_minutes
+MAX_BOOK_AHEAD_DAYS = env.max_book_ahead_days
 AVAILABLE_WEEKDAYS = env.available_weekdays
 
 secretary_agent_prompt = f"""<role>
