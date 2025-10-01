@@ -3,17 +3,15 @@ from langchain_openai import OpenAIEmbeddings
 from config.weaviate_client import create_weaviate_client
 from langchain.tools.retriever import create_retriever_tool
 from langchain_weaviate.vectorstores import WeaviateVectorStore
-from dotenv import load_dotenv
-import os
+from config.env_config import env
 
-load_dotenv()
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-EMBEDDINGS_MODEL = os.getenv("EMBEDDINGS_MODEL", "text-embedding-3-small")
-INDEX_NAME = os.getenv("INDEX_NAME", "RAG")
-RETRIEVER_SCORE_THRESHOLD = os.getenv("RETRIEVER_SCORE_THRESHOLD", 0.6)
-RETRIEVER_K = os.getenv("RETRIEVER_K", 8)
-RETRIEVER_ALPHA = os.getenv("RETRIEVER_ALPHA", 0.5)
+# Environment variables
+OPENAI_API_KEY = env.openai_api_key
+EMBEDDINGS_MODEL = env.embeddings_model
+INDEX_NAME = env.index_name
+RETRIEVER_SCORE_THRESHOLD = env.retriever_score_threshold
+RETRIEVER_K = env.retriever_k
+RETRIEVER_ALPHA = env.retriever_alpha
 
 def initialize_retriever_for_rag():
 

@@ -41,7 +41,6 @@ Public API:
             - The response is always attributed to `"personality_node"`.
 """
 
-
 from typing import Annotated
 from langgraph.prebuilt import InjectedState
 from langchain_openai import ChatOpenAI
@@ -49,20 +48,15 @@ from langchain_core.messages import SystemMessage
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from prompts.personality_prompt import personality_prompt
 from utils.logger_utils import setup_logger
-import os
-from dotenv import load_dotenv
+from config.env_config import env
 
 logger = setup_logger(__name__)
-load_dotenv()
 
-LLM = os.getenv("LLM", "gpt-4.1-mini")
-LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.15"))
-MAX_COMPLETION_TOKENS = int(os.getenv("MAX_COMPLETION_TOKENS", "200"))
-TIMEOUT = int(os.getenv("LLM_TIMEOUT", "20"))
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY not found. Verify if the environment variable is defined!")
-
+LLM = env.llm
+LLM_TEMPERATURE = env.llm_temperature
+MAX_COMPLETION_TOKENS = env.max_completion_tokens
+TIMEOUT = env.llm_timeout
+OPENAI_API_KEY = env.openai_api_key
 
 def respond_to_user(State, rate_limiter: InMemoryRateLimiter, user_message: str, current_date: str):
     """

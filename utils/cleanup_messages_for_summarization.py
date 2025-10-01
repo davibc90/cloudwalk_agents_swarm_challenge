@@ -1,4 +1,7 @@
-"""
+from langchain_core.messages import HumanMessage, AIMessage
+
+def cleanup_messages_for_summarization_node(messages):
+    """
     Clean up and filter a list of LangChain messages for the summarization node.
 
     ### Description
@@ -24,42 +27,23 @@
     ### Returns
     - **list**: A new list containing only the cleaned and filtered `HumanMessage` 
       and `AIMessage` objects.
-
-    ### Example
-    ```python
-    from langchain_core.messages import HumanMessage, AIMessage
-
-    msgs = [
-        HumanMessage(content="Hello!", name="user"),
-        AIMessage(content="Hi there!", name="assistant"),
-        HumanMessage(content="Ignore me", name="supervisor"),
-    ]
-
-    filtered = cleanup_messages_for_summary_team(msgs)
-    # Result: [HumanMessage(content="Hello!"), AIMessage(content="Hi there!")]
-    ```
-"""
-
-from langchain_core.messages import HumanMessage, AIMessage
-
-def cleanup_messages_for_summarization_node(messages):
+    """
+    
     filtered_messages = []
+    
+    # Iterate through each message in the input list
     for m in messages:
         name = (getattr(m, "name", "") or "").lower()
 
+        # Check if the message is a HumanMessage and not from the "supervisor"
         if isinstance(m, HumanMessage):
             if name != "supervisor":
-                filtered_messages.append(
-                    HumanMessage(
-                        content=m.content,
-                    )
-                )
+                filtered_messages.append(HumanMessage(content=m.content))
+                
+        # Check if the message is an AIMessage and does not contain tool calls
         elif isinstance(m, AIMessage) and not getattr(m, "tool_calls", False):
             if name != "supervisor":
-                filtered_messages.append(
-                    AIMessage(
-                        content=m.content,
-                    )
-                )
+                filtered_messages.append(AIMessage(content=m.content))
+
     return filtered_messages
 

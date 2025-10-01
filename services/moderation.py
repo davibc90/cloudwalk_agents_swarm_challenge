@@ -1,8 +1,12 @@
 import os
 from openai import OpenAI
+from config.env_config import env
 from utils.logger_utils import setup_logger
 
 logger = setup_logger(__name__)
+
+# Environment variables
+OPENAI_API_KEY = env.openai_api_key
 
 class ModerationError(Exception):
     """Custom exception raised when content violates moderation rules."""
@@ -16,7 +20,7 @@ def _get_client():
     """
     global _client
     if _client is None:
-        _client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        _client = OpenAI(api_key=OPENAI_API_KEY)
     return _client
 
 
@@ -49,10 +53,10 @@ def assert_safe_input_or_raise(text: str, model: str = "omni-moderation-latest")
     Raises:
         ModerationError: If the input is flagged as violating usage policies.
     """
-    # Get OpenAI client
+    # Get OpenAI client and moderation result
     client = _get_client()
-    resp = client.moderations.create(model=model, input=text)
-    result = resp.results[0]
+    response = client.moderations.create(model=model, input=text)
+    result = response.results[0]
 
     # Extract categories from moderation result
     cats_dict = getattr(result, "categories", {})

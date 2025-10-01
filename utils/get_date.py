@@ -18,16 +18,8 @@ def get_date():
 
     ### Returns
     - **str**: A string containing the formatted date and time, wrapped in XML-like tags.
-
-    ### Example
-    ```python
-    result = get_date()
-    # Possible output:
-    # <current_date>
-    # Monday, 09/29/2025, Time: 03:15 PM
-    # </current_date>
-    ```
     """
+    
     locale.setlocale(locale.LC_TIME, "en_US.UTF-8")
     
     timezone = pytz.timezone("America/Sao_Paulo")

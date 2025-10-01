@@ -1,31 +1,47 @@
-# services/ingest_utils.py
-from typing import List, Dict, Any, Tuple
 import requests
-
+from typing import List, Dict, Any, Tuple
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_weaviate import WeaviateVectorStore
-
-from utils.logger_utils import setup_logger
 from config.weaviate_client import create_weaviate_client
 
+from utils.logger_utils import setup_logger
 logger = setup_logger(__name__)
 
-def fetch_html(url: str, timeout: int = 25) -> Tuple[int, str | None, Dict[str, Any]]:
 
+def fetch_html(
+    url: str,
+    timeout: int = 25,
+) -> Tuple[int, str | None, Dict[str, Any]]:
+    """
+    Fetch raw HTML content from a given URL.
+
+    Args:
+        url (str): The target URL to fetch.
+        timeout (int, optional): Timeout for the request in seconds. Defaults to 25.
+
+    Returns:
+        Tuple[int, str | None, Dict[str, Any]]:
+            - HTTP status code (int).
+            - HTML content as a string if the request was successful, otherwise None.
+            - Metadata dictionary containing:
+                * "content_type" (str): The response content type (if available).
+                * "error" (str): Error details in case of failure.
+    """
     meta: Dict[str, Any] = {}
     logger.debug(f"Fetching URL: {url}")
 
     try:
-        r = requests.get(
+        response = requests.get(
             url,
             timeout=timeout,
             headers={"User-Agent": "Mozilla/5.0 (LangChain-Ingestor)"}
         )
-        meta["content_type"] = r.headers.get("Content-Type")
-        logger.info(f"Fetched {url} with status {r.status_code}")
-        return r.status_code, (r.text if r.ok else None), meta
+        meta["content_type"] = response.headers.get("Content-Type")
+        logger.info(f"Fetched {url} with status {response.status_code}")
+        return response.status_code, (response.text if response.ok else None), meta
+
     except Exception as e:
         meta["error"] = repr(e)
         logger.error(f"Error fetching {url}: {e!r}")
@@ -39,8 +55,23 @@ def ingest_urls_to_weaviate(
     embeddings_model: str,
 ) -> List[Dict[str, Any]]:
     """
-    Retorna uma lista de dicts no formato:
-    { "url": str, "ok": bool, "chunks": int, "error": Optional[str] }
+    Ingests a list of URLs into a Weaviate vector store using OpenAI embeddings.
+
+    This function fetches web pages, extracts text, splits documents into chunks,
+    generates embeddings, and stores them in a Weaviate index.
+
+    Args:
+        urls (List[str]): List of URLs to ingest.
+        index_name (str): The target index name in Weaviate.
+        openai_api_key (str): OpenAI API key used for embeddings.
+        embeddings_model (str): The embedding model to be used (e.g., "text-embedding-ada-002").
+
+    Returns:
+        List[Dict[str, Any]]: A list of ingestion results, where each entry contains:
+            - "url" (str): The processed URL.
+            - "ok" (bool): Whether the ingestion was successful.
+            - "chunks" (int): Number of text chunks successfully ingested.
+            - "error" (Optional[str]): Error message if ingestion failed, otherwise None.
     """
     logger.info(f"Starting ingestion into index '{index_name}' for {len(urls)} URLs.")
 
@@ -95,7 +126,7 @@ def ingest_urls_to_weaviate(
                 results.append({"url": url, "ok": False, "chunks": 0, "error": "Splitter empty"})
                 continue
 
-            # Add docments to vectorstore
+            # Add documents to vectorstore
             texts = [doc.page_content for doc in splits]
             metadatas = [doc.metadata for doc in splits]
             vectorstore.add_texts(texts=texts, metadatas=metadatas)

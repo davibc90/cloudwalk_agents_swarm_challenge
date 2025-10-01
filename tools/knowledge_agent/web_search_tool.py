@@ -1,12 +1,10 @@
 from langchain_core.tools import tool
 from typing import List, Dict, Any
 from tavily import TavilyClient
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from config.env_config import env
 
-# Inicializa cliente Tavily
-tavily_api_key = os.getenv("TAVILY_SEARCH_API_KEY")
+# Get Tavily API key from environment variables and initialize Tavily client
+tavily_api_key = env.tavily_search_api_key
 tavily = TavilyClient(api_key=tavily_api_key)
 
 @tool
@@ -19,9 +17,12 @@ def web_search_tool(query: str, max_results: int = 15) -> List[Dict[str, Any]]:
     Returns:
         List of dicts with {title, url, content}
     """
-    resp = tavily.search(query, max_results=max_results)
+    # Search using Tavily API
+    response = tavily.search(query, max_results=max_results)
     results = []
-    for r in resp.get("results", []):
+
+    # Process search results
+    for r in response.get("results", []):
         results.append({
             "title": r.get("title"),
             "url": r.get("url"),

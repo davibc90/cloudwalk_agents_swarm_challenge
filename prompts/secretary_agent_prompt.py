@@ -1,17 +1,11 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from config.env_config import env
 
-BOOKING_START_TIME = os.getenv("BOOKING_START_TIME", "09:00")
-BOOKING_END_TIME = os.getenv("BOOKING_END_TIME", "18:00")
-BOOKING_DURATION_MINUTES = int(os.getenv("BOOKING_DURATION_MINUTES", "30"))
-MAX_BOOK_AHEAD_DAYS = int(os.getenv("MAX_BOOK_AHEAD_DAYS", "15"))
-
-AVAILABLE_WEEKDAYS = os.getenv(
-    "AVAILABLE_WEEKDAYS",
-    "monday,tuesday,wednesday,thursday,friday,saturday"
-)
-AVAILABLE_WEEKDAYS = [day.strip().lower() for day in AVAILABLE_WEEKDAYS.split(",")]
+# Business rules
+BOOKING_START_TIME = env.booking_starting_time
+BOOKING_END_TIME = env.booking_end_time
+BOOKING_DURATION_MINUTES = (env.booking_duration_minutes)
+MAX_BOOK_AHEAD_DAYS = (env.max_book_ahead_days)
+AVAILABLE_WEEKDAYS = env.available_weekdays
 
 secretary_agent_prompt = f"""<role>
 1. You are a secretary agent

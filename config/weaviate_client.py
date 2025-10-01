@@ -1,17 +1,13 @@
 
-import os
 import weaviate
-from dotenv import load_dotenv
-load_dotenv()
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+from config.env_config import env
 
 def create_weaviate_client():
     """
     Weaviate client initialization module.
 
     This module is responsible for:
-        - Loading environment variables from the .env file.
+        - Loading environment variables
         - Retrieving OpenAI and Weaviate connection settings.
         - Providing a function to create a Weaviate client connected to a local instance.
 
@@ -28,13 +24,14 @@ def create_weaviate_client():
         print(client.is_ready())  # Check if Weaviate is up and running
     """
     
-    host = os.getenv("WEAVIATE_HOST", "127.0.0.1")
-    port = int(os.getenv("WEAVIATE_HOST_PORT", 11000))
-    grpc_port = int(os.getenv("WEAVIATE_GRPC_PORT", 50051))
+    host = env.weaviate_host
+    port = env.weaviate_host_port
+    grpc_port = env.weaviate_grpc_port
+    openai_api_key = env.openai_api_key
     
     return weaviate.connect_to_local(
         host=host,
         port=port,
         grpc_port=grpc_port,
-        headers={"X-OpenAI-Api-Key": OPENAI_API_KEY}
+        headers={"X-OpenAI-Api-Key": openai_api_key}
     )

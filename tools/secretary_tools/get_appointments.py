@@ -1,9 +1,9 @@
 """
-    Query the bookings database and return a normalized, single-day availability map
+    This file implements a tool to query the bookings database and return a normalized, single-day availability map
     (and occupied time slots) for São Paulo time, encoded as a JSON string.
 
     This tool validates the requested date (not in the past, no more than
-    `MAX_BOOK_AHEAD_DAYS` days ahead), converts the day’s local window to UTC, fetches
+    `MAX_BOOK_AHEAD_DAYS` days ahead), converts the day's local window to UTC, fetches
     existing appointments from Supabase, computes busy intervals, and discretizes them
     based on the booking duration/step. It never suggests times outside business
     hours or in the past.
@@ -96,6 +96,9 @@ def get_appointments(
             # Sem parâmetro => usa o dia corrente em São Paulo
             target_local_start = now_br_dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
+        # =========================
+        # Validate date range
+        # =========================
         target_day = target_local_start.date()
 
         if target_day < today_br:
@@ -135,14 +138,14 @@ def get_appointments(
         # =========================
         # Supabase query 
         # =========================
-        q = (
+        query = (
             supabase
             .table("appointments")
             .select("id, start_time, end_time")
         ).lt("start_time", to_iso(end_utc)).gt("end_time", to_iso(start_utc))
 
-        resp = q.order("start_time", desc=False).execute()
-        appointments = resp.data
+        response = query.order("start_time", desc=False).execute()
+        appointments = response.data
 
         # =========================
         # Base availability

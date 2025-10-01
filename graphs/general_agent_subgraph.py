@@ -21,20 +21,16 @@ from prompts.secretary_agent_prompt import secretary_agent_prompt
 from prompts.customer_service_agent_prompt import customer_service_agent_prompt
 from prompts.knowledge_agent_prompt import knowledge_agent_prompt
 from prompts.supervisor_prompt import supervisor_prompt
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from config.env_config import env
 
 from utils.logger_utils import setup_logger
 logger = setup_logger(__name__)
 
-LLM = os.getenv("LLM", "gpt-4.1-mini")
-LLM_TEMPERATURE = os.getenv("LLM_TEMPERATURE", 0.15)
-MAX_COMPLETION_TOKENS = os.getenv("MAX_COMPLETION_TOKENS", 200)
-TIMEOUT = os.getenv("LLM_TIMEOUT", 20)
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY not found. Verify if the environment variable is defined!")
+LLM = env.llm
+LLM_TEMPERATURE = env.llm_temperature
+MAX_COMPLETION_TOKENS = env.max_completion_tokens
+LLM_TIMEOUT = env.llm_timeout
+OPENAI_API_KEY = env.openai_api_key
 
 # Tool sets for each agent
 knowledge_agent_tools = [initialize_retriever_for_rag(), web_search_tool]
@@ -125,7 +121,7 @@ def generate_worker_graph(
             model=LLM,
             temperature=LLM_TEMPERATURE,
             max_completion_tokens=MAX_COMPLETION_TOKENS,
-            timeout=TIMEOUT,
+            timeout=LLM_TIMEOUT,
             openai_api_key=OPENAI_API_KEY,
             rate_limiter=rate_limiter,
         ).bind_tools(
