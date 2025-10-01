@@ -10,8 +10,8 @@
 from supabase import create_client, Client
 from config.env_config import env
 
-SUPABASE_URL = env.supabase_url
-SUPABASE_KEY = env.supabase_service_role_key
+SUPABASE_URL = str(env.supabase_url)
+SUPABASE_KEY = str(env.supabase_service_role_key)
 
 # Instância única do cliente
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
