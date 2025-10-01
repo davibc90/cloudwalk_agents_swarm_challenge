@@ -42,7 +42,6 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 # CUSTOMER SERVICE TOOLS TEST
 
-
 # Troubleshooting 1
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
@@ -52,7 +51,6 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
   -d "{\"message\":\"It is showing error 321 in my credit card machine...\",\"user\":\"client789\"}"
-
 
 
 -----------------------------
@@ -68,7 +66,11 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"Could it be next friday at 11 AM?\",\"user\":\"client789\"}"
+  -d "{\"message\":\"Could it be on Friday at 11 AM?\",\"user\":\"client789\"}"
+
+  curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"message\":\"Do you need for checking the availability?\",\"user\":\"client789\"}"
 
 
 -----------------------------
@@ -93,11 +95,10 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"What is the current date and time?\",\"user\":\"client789\"}"
+  -d "{\"message\":\"What is the current date, time and timezone?\",\"user\":\"client789\"}"
 
 
 -----------------------------
-
 
 # GUARDRAILS TEST
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
