@@ -337,6 +337,12 @@ def initialize_retriever_for_rag():
 
 **The following unit and integration tests have been performed so far:**
 
+**Reasoning Test**
+- Evaluate the quality of the agents' reasoning (planning, task decomposition, tool selection, consistency checking, and self-correction) without requiring explicit chains of thought; evaluate via observable behavior, logs, and results
+
+**Multi-Agent Coordination Test**
+- Validates the communication and delegations across the agents, focusing on simulating scenarios where the agents need to coordinate their actions and share information in order to achieve a common goal
+
 **Knowledge Agent**
 - Retriever Tool test, after ingesting the urls, try to ask the agent about the InfinitePay's website content.
 - Web Search Tool test, asking for news and events, always after confirming the information is not inside the knowledge base
@@ -360,12 +366,46 @@ def initialize_retriever_for_rag():
 **Summarization Test**
 - Consists in testing the summarization functionality, observing the conversation history and the summary after a certain number of messages. The old chat history should be deleted after the summarization process and the summary should be added to the conversation history, preserving the conversation context and keeping the very last messages (default last 4 messages).
 
-**Date/Time Context Test**
+**Date/Time Context Awareness Test**
 - Consists in testing if the agents swarm knows the current date and time
 
 **Further Tests**
-- Trace and analyze inputs and outputs of the graph in many different scenarios using evals solutions, such as LangSmith Studio
+- Tracing & Observability
+    * Objective: Ensure full end-to-end traceability and monitoring.
+    * Approach:
+        * Use LangSmith, LangFuse, or equivalent tools to trace inputs/outputs.
+        * Measure latency at every stage (agent, tool, database).
+        * Collect structured logs for scenario reproducibility and auditing.
+        * Track cost metrics (tokens, execution time, external API calls).
 
+- Adversarial & Stress Testing
+    * Objective: Evaluate the robustness and security of agents, ensuring that both individual reasoning and multi-agent collaboration can withstand adversarial conditions.
+    * Approach:
+        * Conduct prompt injection attacks specifically targeting single agents and the message-passing mechanisms between them, testing their ability to detect, filter, and resist malicious inputs.
+        * Explore attack vectors such as hidden instructions, role manipulation, and data poisoning to validate safeguards against unauthorized actions.
+        * Simulate scenarios with conflicting or adversarial goals (e.g., a secretary agent blocking an appointment while a customer agent insists) to examine how agents handle negotiation, maintain trust boundaries, and prevent escalation of vulnerabilities.
+
+- Automated Testing & CI/CD Integration
+    * Objective: Ensure reproducible and automated validation of agentic workflows when there is a new update in the codebase
+    * Approach:
+        * CI pipelines (GitHub Actions, GitLab CI, Jenkins) to run:
+            * Unit tests for individual agents and tools.
+            * Integration tests for multi-agent coordination.
+            * Reasoning tests validating chain-of-thought execution consistency.
+        * Automatic reports on coverage per agent type and cross-agent interactions.
+        * Notifications on failures with links to traces/logs for quick debugging.
+
+- A/B Prompt Testing
+    * Objective: Validate the effectiveness of different prompt formulations and strategies to optimize accuracy, efficiency, and user experience.
+    * Approach:
+        * Run controlled experiments where multiple prompt variants are tested against the same scenarios.
+        * Measure and compare outcomes in terms of:
+            * Accuracy (task completion success rate).
+            * Efficiency (token usage, execution time).
+            * Robustness (resistance to edge cases and adversarial prompts).
+            * User experience metrics (clarity, consistency, perceived helpfulness).
+        * Use statistical methods (e.g., significance testing) to validate improvements.
+        * Integrate A/B results into continuous improvement cycles for prompt engineering.
 ---
 
 ## Supabase 
@@ -393,10 +433,8 @@ A big set of tasks were accomplished using the tools above, such as:
   - Building algorithms sketches
   - Problem-solving strategies 
   - Code Modularization and Refactoring
-  - General Optimization
   - Debugging and Error Correction
   - Docstrings generation
   - Prompt refinement
   - Suggestion design patterns and best practices
-  - Suggestion of unit and integration tests
   - Log analysis to identify failures
