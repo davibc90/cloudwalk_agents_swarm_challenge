@@ -14,33 +14,18 @@ class EnvConfig(BaseSettings):
     # ---------------------------
     # Supabase
     # ---------------------------
-    supabase_url: AnyHttpUrl = Field(
-        ...,
-        validation_alias=AliasChoices("SUPABASE_URL"),
-        description="Supabase URL",
-    )
-    supabase_service_role_key: str = Field(
-        ...,
-        validation_alias=AliasChoices("SUPABASE_SERVICE_ROLE_KEY"),
-        description="Supabase service role key",
-    )
+    supabase_url: AnyHttpUrl = Field(..., validation_alias=AliasChoices("SUPABASE_URL"), description="Supabase URL")
+    supabase_service_role_key: str = Field(...,validation_alias=AliasChoices("SUPABASE_SERVICE_ROLE_KEY"),description="Supabase service role key")
 
     # ---------------------------
     # Checkpointer_DB
     # ---------------------------
-    db_uri: str = Field(
-        ...,
-        validation_alias=AliasChoices("DB_URI"),
-        description="Database URI for checkpointer",
-    )
+    db_uri: str = Field(..., validation_alias=AliasChoices("DB_URI"), description="Database URI for checkpointer")
 
     # ---------------------------
     # Web_Search_Tool
     # ---------------------------
-    tavily_search_api_key: Optional[str] = Field(
-        None,
-        validation_alias=AliasChoices("TAVILY_SEARCH_API_KEY"),
-    )
+    tavily_search_api_key: Optional[str] = Field(None, validation_alias=AliasChoices("TAVILY_SEARCH_API_KEY"))
 
     # ---------------------------
     # Summarization parameters
@@ -94,9 +79,7 @@ class EnvConfig(BaseSettings):
     # ---------------------------
     booking_starting_time: time = Field(..., validation_alias=AliasChoices("BOOKING_STARTING_TIME"))
     booking_end_time: time = Field(..., validation_alias=AliasChoices("BOOKING_END_TIME"))
-    booking_duration_minutes: int = Field(
-        ..., validation_alias=AliasChoices("BOOKINKG_DURATION_MINUTES")  # (mantido conforme seu nome)
-    )
+    booking_duration_minutes: int = Field(..., validation_alias=AliasChoices("BOOKINKG_DURATION_MINUTES"))
     booking_step_minutes: int = Field(..., validation_alias=AliasChoices("BOOKING_STEP_MINUTES"))
     available_weekdays: List[str] = Field(..., validation_alias=AliasChoices("AVAILABLE_WEEKDAYS"))
     max_book_ahead_days: int = Field(..., validation_alias=AliasChoices("MAX_BOOK_AHEAD_DAYS"))
