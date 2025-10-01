@@ -118,16 +118,21 @@ Last node - `Personality node` (`graphs/other_components/personality_node.py`)
 ```
 
 - The other variables are majorly related to the application's runtime configurations, such as business rules, LLM parameters, etc
+
 ---
 
 ## Building & Running
 
-Navigate to the root directory and run the following command to build and download images and start all services:
+- The `docker-compose.yaml` file is already configured to run the application and it is in the root of the project directory
 `IT IS READY TO RUN! PERMISSION GRANTED FOR USING MY OWN TOKENS AND OTHER PRIVATE KEYS IF WANTED`
+- Use the CLI to navigate to the project directory 
+- Once in the root level of the project directory, run the following command:
 
 ```bash
 docker-compose up -d
 ```
+- The agents swarm service will be built and other images will be downloaded. 
+- The application will be started automatically.
 
 ---
 
