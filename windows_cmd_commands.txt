@@ -5,32 +5,7 @@ WINDOWS CMD commands (NOT PowerShell's)
 DATA INGESTION COMMAND
 ==============================
 
-curl -X POST "http://127.0.0.1:10000/ingest_url_content" ^
-  -H "Content-Type: application/json" ^
-  -d "{
-    \"urls\": [
-      \"https://www.infinitePay.io\",
-      \"https://www.infinitePay.io/maquininha\",
-      \"https://www.infinitePay.io/maquininha-celular\",
-      \"https://www.infinitePay.io/tap-to-pay\",
-      \"https://www.infinitePay.io/pdv\",
-      \"https://www.infinitePay.io/receba-na-hora\",
-      \"https://www.infinitePay.io/gestao-de-cobranca-2\",
-      \"https://www.infinitePay.io/gestao-de-cobranca\",
-      \"https://www.infinitePay.io/link-de-pagamento\",
-      \"https://www.infinitePay.io/loja-online\",
-      \"https://www.infinitePay.io/boleto\",
-      \"https://www.infinitePay.io/conta-digital\",
-      \"https://www.infinitePay.io/conta-pj\",
-      \"https://www.infinitePay.io/pix\",
-      \"https://www.infinitePay.io/pix-parcelado\",
-      \"https://www.infinitePay.io/emprestimo\",
-      \"https://www.infinitePay.io/cartao\",
-      \"https://www.infinitePay.io/rendimento\"
-    ]
-  }"
-
-
+curl -X POST "http://127.0.0.1:10000/ingest_url_content" -H "Content-Type: application/json" -d "{\"urls\":[\"https://www.infinitePay.io\",\"https://www.infinitePay.io/maquininha\",\"https://www.infinitePay.io/maquininha-celular\",\"https://www.infinitePay.io/tap-to-pay\",\"https://www.infinitePay.io/pdv\",\"https://www.infinitePay.io/receba-na-hora\",\"https://www.infinitePay.io/gestao-de-cobranca-2\",\"https://www.infinitePay.io/gestao-de-cobranca\",\"https://www.infinitePay.io/link-de-pagamento\",\"https://www.infinitePay.io/loja-online\",\"https://www.infinitePay.io/boleto\",\"https://www.infinitePay.io/conta-digital\",\"https://www.infinitePay.io/conta-pj\",\"https://www.infinitePay.io/pix\",\"https://www.infinitePay.io/pix-parcelado\",\"https://www.infinitePay.io/emprestimo\",\"https://www.infinitePay.io/cartao\",\"https://www.infinitePay.io/rendimento\"]}"
 
 ==============================
 TESTS COMMANDS
