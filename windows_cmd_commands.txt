@@ -1,5 +1,7 @@
 
 WINDOWS CMD COMMANDS (NOT PowerShell's)
+The following commands assumes that you will be running in local host (127.0.0.1) 
+and the port 10000 assigned to the agents swarm service in the docker-compose.yaml in this root folder
 
 ==============================
 DATA INGESTION COMMAND
