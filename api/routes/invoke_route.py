@@ -1,31 +1,16 @@
-
-from typing import Optional
 from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel
 from graphs.main_graph import call_agents_team
 from utils.logger_utils import setup_logger
 from services.moderation import assert_safe_input_or_raise, ModerationError, _cats_true
+from api.schemas.invoke_schema import QueryRequest, QueryResponse
 
 logger = setup_logger(__name__)
 
 # Initialize router
 router = APIRouter()
 
-# Request schema
-class QueryRequest(BaseModel):
-    message: str
-    user: str
-    human_intervention_response: Optional[bool] = False
-
-# Response schema
-class QueryResponse(BaseModel):
-    response: dict
-
-
-# Define the route to invoke the agent
 @router.post("/langgraph/invoke", response_model=QueryResponse, status_code=status.HTTP_201_CREATED)
 async def invoke_agent(request: QueryRequest):
-
     """
     Invoke the AI agents team to process a user message.
 
@@ -61,7 +46,6 @@ async def invoke_agent(request: QueryRequest):
         - Output blocked by moderation.
         - Unexpected internal errors during processing.
     """
-    
     try:
         logger.info("Receiving request to invoke the agents team...")
 
@@ -82,7 +66,7 @@ async def invoke_agent(request: QueryRequest):
             raise HTTPException(status_code=400, detail=detail_message)
 
         # =========================
-        # Input guardrail 
+        # Input moderation guardrail 
         # =========================
         try:
             mod_result = assert_safe_input_or_raise(message, user_id="system")
@@ -95,16 +79,14 @@ async def invoke_agent(request: QueryRequest):
             logger.warning("Input blocked by moderation: %s", me)
             raise HTTPException(status_code=400, detail=str(me))
 
-
         # Invoking AI Team and response validation
         response = call_agents_team(message, user, human_intervention_response)
         if not response:
             logger.error("Failed to obtain response from AI team...")
-            raise HTTPException(status_code=500, detail = "Failed to obtain response from AI team...")
-
+            raise HTTPException(status_code=500, detail="Failed to obtain response from AI team...")
 
         # =========================
-        # Output guardrail 
+        # Output moderation guardrail 
         # =========================
         try:
             response_text = str(response['ai_response'])  

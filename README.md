@@ -43,14 +43,13 @@ This repository implements an **Agents Swarm**—a coordinated set of AI agents 
 ## Directory Structure
 
 ```text
-.
-├── .dockerignore
-├── .gitignore
+...
 ├── Dockerfile
 ├── docker-compose.yaml
 ├── main.py
 ├── requirements.txt
 ├── routes/   -> invoking agents swarm and data ingestion routes
+├── services/ -> services for data ingestion and moderation
 ├── config/   -> configuration files for supabase e weaviate vector database clients
 ├── graphs/   -> main graph, agents subgraphs, summarization and personality nodes
 ├── prompts/  -> prompts for each agent
@@ -134,7 +133,7 @@ docker-compose up -d
 
 ## API Endpoints and Execution Steps
 
-`WINDOWS POWERSHELL COMMANDS FOR DATA INGESTION AND SWARM INVOKING ARE INSIDE powershell_commands.txt`
+`WINDOWS POWERSHELL COMMANDS FOR DATA INGESTION AND SWARM INVOKING ARE INSIDE windows_cmd_commands.txt`
 
 ### STEP 1: **Ingest URL Data**  
    `/routes/ingest_data_route.py`  
@@ -159,8 +158,9 @@ docker-compose up -d
 
 ## RAG Pipeline Description
 
-1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section, shown bellow:
-```python
+1. URL data ingestion in the vector db through the ingest_data route, described in STEP 1 of the previous section (`routes/ingest_data_route.py`), shown bellow:
+
+```python 
 ...
 @router.post("/ingest_url_content", response_model=IngestResponse)
 def ingest(req: IngestRequest) -> IngestResponse:
@@ -185,7 +185,7 @@ def ingest(req: IngestRequest) -> IngestResponse:
     return IngestResponse(collection=INDEX_NAME, results=results, total_chunks=total_chunks)
 ```
 
-2. Loop execution for data fetching and processing, each url at a time, always using Langchain components, implemented in `utils/ingest_data_utils.py`:
+2. Loop execution for data fetching and processing, each url at a time, always using Langchain components, implemented in `services/ingest_data.py`:
     - *WebBaseLoader* is used to fetch the data from the url
     - *RecursiveCharacterTextSplitter* is used to split the data into chunks
     - *OpenAIEmbeddings* is used to generate embeddings for the data
