@@ -11,6 +11,15 @@ curl -X POST "http://127.0.0.1:10000/ingest_url_content" -H "Content-Type: appli
 TESTS COMMANDS
 ==============================
 
+
+# DATE/TIME CONTEXT
+
+curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"message\":\"What is the current date, time and timezone?\",\"user\":\"client789\"}"
+
+-----------------------------
+
 # RAG QUESTIONS
 
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
@@ -95,14 +104,6 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 -----------------------------
 
-# DATE/TIME CONTEXT
-
-curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"message\":\"What is the current date, time and timezone?\",\"user\":\"client789\"}"
-
-
------------------------------
 
 # GUARDRAILS TEST
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
