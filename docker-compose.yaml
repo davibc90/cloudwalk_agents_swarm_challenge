@@ -92,7 +92,7 @@ services:
       BOOKING_END_TIME: "18:00"         # end of the booking range interval
       BOOKING_DURATION_MINUTES: "30"    # standard appointment duration in minutes
       BOOKING_STEP_MINUTES: "30"        # booking step in minutes
-      AVAILABLE_WEEKDAYS: "monday,tuesday, wednesday, thursday, friday, saturday"  # available weekdays for booking
+      AVAILABLE_WEEKDAYS: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]  # available weekdays for booking
       MAX_BOOK_AHEAD_DAYS: "15"         # max booking ahead days from current date
 
       # --- No buffer for logs ---
