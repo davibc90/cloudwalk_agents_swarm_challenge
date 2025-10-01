@@ -1,4 +1,13 @@
-"""
+
+import os
+import weaviate
+from dotenv import load_dotenv
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+def create_weaviate_client():
+    """
     Weaviate client initialization module.
 
     This module is responsible for:
@@ -17,16 +26,7 @@
 
         client = create_weaviate_client()
         print(client.is_ready())  # Check if Weaviate is up and running
-"""
-
-import os
-import weaviate
-from dotenv import load_dotenv
-load_dotenv()
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-def create_weaviate_client():
+    """
     
     host = os.getenv("WEAVIATE_HOST", "127.0.0.1")
     port = int(os.getenv("WEAVIATE_HOST_PORT", 11000))
