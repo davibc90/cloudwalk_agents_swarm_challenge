@@ -409,8 +409,8 @@ def initialize_retriever_for_rag():
             * Efficiency (token usage, execution time).
             * Robustness (resistance to edge cases and adversarial prompts).
             * User experience metrics (clarity, consistency, perceived helpfulness).
-        * Use statistical methods (e.g., significance testing) to validate improvements.
         * Integrate A/B results into continuous improvement cycles for prompt engineering.
+        
 ---
 
 ## Supabase 
