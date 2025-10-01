@@ -69,7 +69,7 @@ async def invoke_agent(request: QueryRequest):
         # Input moderation guardrail 
         # =========================
         try:
-            mod_result = assert_safe_input_or_raise(message, user_id="system")
+            mod_result = assert_safe_input_or_raise(message)
             logger.info(
                 "Moderation approved | flagged=%s | categories_true=%s",
                 mod_result.flagged,
@@ -90,7 +90,7 @@ async def invoke_agent(request: QueryRequest):
         # =========================
         try:
             response_text = str(response['ai_response'])  
-            mod_result_out = assert_safe_input_or_raise(response_text, user_id="system")
+            mod_result_out = assert_safe_input_or_raise(response_text)
             logger.info(
                 "Output approved | flagged=%s | categories_true=%s",
                 mod_result_out.flagged,

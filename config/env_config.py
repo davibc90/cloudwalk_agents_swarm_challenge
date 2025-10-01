@@ -33,9 +33,7 @@ class EnvConfig(BaseSettings):
     summary_tokens: int = Field(300, validation_alias=AliasChoices("SUMMARY_TOKENS"))
     starting_summary_index: int = Field(5, validation_alias=AliasChoices("STARTING_SUMMARY_INDEX"))
     summarization_llm: str = Field("gpt-4.1-nano", validation_alias=AliasChoices("SUMMARIZATION_LLM"))
-    summarization_llm_temperature: float = Field(
-        0.15, validation_alias=AliasChoices("SUMMARIZATION_LLM_TEMPERATURE")
-    )
+    summarization_llm_temperature: float = Field( 0.15, validation_alias=AliasChoices("SUMMARIZATION_LLM_TEMPERATURE"))
     keep_last: int = Field(4, validation_alias=AliasChoices("KEEP_LAST"))
 
     # ---------------------------
