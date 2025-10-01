@@ -4,7 +4,7 @@ from typing import Optional
 from langchain_core.tools import tool
 from config.supabase_client import supabase
 from config.env_config import env
-from utils.appointment_utils import to_iso8601, validate_requested_date, ValidationError
+from utils.appointment_utils import to_iso8601, validate_requested_date, ValidationError, to_sp_hhmm
 import json
 import pytz
 
@@ -40,11 +40,21 @@ def get_appointments(date_str: Optional[str]) -> str:
         )
         appointments = availability_checking.data or []
 
+        # converts to HH:MM São Paulo
+        appointments = [
+            {
+                "id": appt["id"],
+                "start_time": to_sp_hhmm(appt["start_time"]),
+                "end_time": to_sp_hhmm(appt["end_time"]),
+            }
+            for appt in appointments
+        ]
+
         # Returns JSON with occupied time slots and context
         return json.dumps(
             {
                 "ok": True,
-                "appointments": appointments,
+                "occupied_slots": appointments,
                 "context": {
                     "date_requested": target_day.strftime("%m/%d/%Y"),
                 },
