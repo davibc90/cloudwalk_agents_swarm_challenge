@@ -4,13 +4,12 @@ from datetime import datetime
 
 def get_date():
     """
-    Get the current date and time in São Paulo formatted in U.S. English style.
+        Get the current date and time in São Paulo formatted in U.S. English style.
 
-    ### Description
-    Retrieves the current local time in the **America/Sao_Paulo** timezone,
-    formats it as: **Month, D, YYYY - HH:MM AM/PM**
-    (e.g., September, 30, 2025 - 02:15 PM),
-    and wraps the result in a <current_date> tag.
+        ### Description
+        Retrieves the current local time in the **America/Sao_Paulo** timezone,
+        formats it as: **Month, D, YYYY - HH:MM AM/PM** (e.g., September, 30, 2025 - 02:15 PM),
+        and wraps the result in a <current_date> tag
     """
     
     try:
