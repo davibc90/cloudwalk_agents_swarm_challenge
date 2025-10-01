@@ -1,4 +1,3 @@
-# utils/appointments_utils/validation.py
 from datetime import datetime, timedelta
 from config.env_config import env
 import pytz
@@ -47,15 +46,29 @@ def validate_requested_date(date_str: str | None) -> datetime:
     else:
         target_day = datetime.now(TZ)  # aware
 
-    # Normaliza para 00:00 no fuso de SP (sem localize duplicado)
+    # Normalizes to 00:00 in São Paulo timezone (without duplicate localize)
     target_day = _normalize_midnight_sp(target_day)
 
     today = _normalize_midnight_sp(datetime.now(TZ))
     max_day = today + timedelta(days=MAX_BOOK_AHEAD_DAYS)
 
     if target_day < today:
-        raise ValidationError("Não é permitido consultar horários no passado.")
+        raise ValidationError("It is forbidden to consult past dates.")
     if target_day > max_day:
-        raise ValidationError(f"Agendamentos só podem ser feitos até {MAX_BOOK_AHEAD_DAYS} dias no futuro.")
+        raise ValidationError(f"Appointments can only be scheduled up to {MAX_BOOK_AHEAD_DAYS} days in advance.")
 
     return target_day
+
+def to_sp_hhmm(value):
+    """
+        Converts timestamp (ISO str ou datetime) to HH:MM in São Paulo.
+    """
+    if isinstance(value, str):
+        dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    else:
+        dt = value
+
+    if dt.tzinfo is None:
+        dt = pytz.UTC.localize(dt)
+
+    return dt.astimezone(TZ).strftime("%H:%M")
