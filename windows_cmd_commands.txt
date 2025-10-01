@@ -66,11 +66,11 @@ curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
 
 curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"Could it be on Friday at 11 AM?\",\"user\":\"client789\"}"
+  -d "{\"message\":\"Could it be this Friday at 11 AM?\",\"user\":\"client789\"}"
 
-  curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
+curl -X POST "http://127.0.0.1:10000/langgraph/invoke" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"Do you need for checking the availability?\",\"user\":\"client789\"}"
+  -d "{\"message\":\"Do you have any available slots on sunday?\",\"user\":\"client789\"}"
 
 
 -----------------------------
